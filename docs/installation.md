@@ -4,7 +4,7 @@
 composer require laranail/python
 ```
 
-The service provider and the `Python` facade are auto-discovered.
+The service provider and the `Polyglot` facade are auto-discovered.
 
 ```bash
 php artisan laranail::polyglot.install

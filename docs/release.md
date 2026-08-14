@@ -13,7 +13,7 @@ tag per the laranail convention.
 
 **What SemVer covers (the public API):**
 
-- The `Python` facade and `Bridge\PolyglotManager`'s method surface.
+- The `Polyglot` facade and `Bridge\PolyglotManager`'s method surface.
 - `Contracts\*` — `TransportContract`, `HttpClient`, `ProcessRunner`, `CallbackVerifier`,
   `ReplayGuard`, `TaskStore`, `ScriptResolver`, `RuntimeResolver`. These are the swap points, so a
   change here breaks anyone who implemented one.
