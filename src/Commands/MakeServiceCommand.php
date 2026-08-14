@@ -26,9 +26,6 @@ final class MakeServiceCommand extends Command
 
     protected $name = 'laranail::polyglot.make-service';
 
-    /** @var list<string> */
-    protected array $commandAliases = ['python:make-service'];
-
     protected $description = 'Scaffold a FastAPI service wired to this package.';
 
     protected $signature = 'laranail::polyglot.make-service
@@ -49,7 +46,7 @@ final class MakeServiceCommand extends Command
             return self::FAILURE;
         }
 
-        $target = base_path("python/services/{$name}");
+        $target = base_path("polyglot/services/{$name}");
 
         if ($files->isDirectory($target) && ! $this->option('force')) {
             $this->services->display()->error("[{$target}] already exists. Pass --force to overwrite.");
@@ -78,10 +75,10 @@ final class MakeServiceCommand extends Command
         }
 
         $display = $this->services->display();
-        $display->success("Scaffolded python/services/{$name}.");
+        $display->success("Scaffolded polyglot/services/{$name}.");
 
         $display->list([
-            "cd python/services/{$name} && python -m venv .venv && . .venv/bin/activate",
+            "cd polyglot/services/{$name} && python -m venv .venv && . .venv/bin/activate",
             'pip install -r requirements.txt',
             "uvicorn main:app --reload --port {$port}",
             "Add a '{$name}' entry under laranail.polyglot.services, then run laranail::polyglot.doctor.",

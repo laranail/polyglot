@@ -30,9 +30,6 @@ final class DoctorCommand extends Command
 
     protected $name = 'laranail::polyglot.doctor';
 
-    /** @var list<string> */
-    protected array $commandAliases = ['python:doctor'];
-
     protected $description = 'Report every configured service and target, and anything misconfigured.';
 
     public function handle(
@@ -209,7 +206,7 @@ final class DoctorCommand extends Command
         $secrets = $config->stringList('callbacks.secrets');
 
         $this->services->display()->keyValue([
-            'Callback prefix' => $config->string('callbacks.prefix', 'api/python'),
+            'Callback prefix' => $config->string('callbacks.prefix', 'api/polyglot'),
             'Callback secrets' => $secrets === [] ? 'none' : count($secrets) . ' configured',
             'Tolerance' => $config->int('callbacks.tolerance', 300) . 's',
         ]);

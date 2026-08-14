@@ -41,7 +41,26 @@ php artisan laranail::polyglot.doctor   # every service, its TLS mode, auth, and
 
 ## <a name="documentation"></a>Documentation
 
-Full documentation is at **[opensource.simtabi.com/documentation/laranail/polyglot](https://opensource.simtabi.com/documentation/laranail/polyglot/)** — installation, getting started, configuration, the HTTP service registry, the process bridge and its security model, signed callbacks, async tasks, the commands, testing with `Polyglot::fake()`, the migration from `laranail/toolkit`, and the release process.
+Hosted at **[opensource.simtabi.com/documentation/laranail/polyglot](https://opensource.simtabi.com/documentation/laranail/polyglot/)**.
+
+### Guides
+- [Installation](docs/installation.md) — requirements, what to publish, what stays off
+- [Getting started](docs/getting-started.md) — the two transports and the first calls
+- [Configuration](docs/configuration.md) — every key and its environment variable
+- [Security](docs/security.md) — the threat model and every guard, with the reasoning
+- [Architecture](docs/architecture.md) — the transports, the resolver, and what the rename changed
+- [Release](docs/release.md) — cutting a version
+
+### Reference
+- [The HTTP transport](docs/tools/http.md) — the service registry, auth, TLS, health
+- [The process transport](docs/tools/process.md) — runtimes, the allow-list, the clamps
+- [Results and errors](docs/tools/results.md) — `CallResult`, the eight error codes, redaction
+- [Signed callbacks](docs/tools/callbacks.md) — HMAC, the timestamp window, the replay guard
+- [Commands](docs/tools/commands.md) — doctor, health, run, install, make-service
+
+### Recipes
+- [Call an HTTP service](docs/recipes/call-a-service.md)
+- [Add a runtime](docs/recipes/add-a-runtime.md)
 
 ## Security
 

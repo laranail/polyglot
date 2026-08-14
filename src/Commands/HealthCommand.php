@@ -22,9 +22,6 @@ final class HealthCommand extends Command
 
     protected $name = 'laranail::polyglot.health';
 
-    /** @var list<string> */
-    protected array $commandAliases = ['python:health'];
-
     protected $description = 'Probe every configured service and exit non-zero if any is unhealthy.';
 
     protected $signature = 'laranail::polyglot.health

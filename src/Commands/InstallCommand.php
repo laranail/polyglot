@@ -16,9 +16,6 @@ final class InstallCommand extends Command
 
     protected $name = 'laranail::polyglot.install';
 
-    /** @var list<string> */
-    protected array $commandAliases = ['python:install'];
-
     protected $description = 'Publish the laranail/python configuration.';
 
     public function handle(): int

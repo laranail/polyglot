@@ -45,7 +45,7 @@ final readonly class VerifySignature
             return new JsonResponse(['message' => 'Unauthorized'], 401);
         }
 
-        $request->attributes->set('python_callback', $envelope);
+        $request->attributes->set('polyglot_callback', $envelope);
 
         return $next($request);
     }

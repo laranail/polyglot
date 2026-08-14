@@ -96,7 +96,7 @@ finishes rather than being polled. See [tools/callbacks.md](tools/callbacks.md).
 php artisan laranail::polyglot.make-service inference
 ```
 
-Three files under `python/services/inference`, already speaking the health and
+Three files under `polyglot/services/inference`, already speaking the health and
 signature contracts this package expects.
 
 ---

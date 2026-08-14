@@ -212,7 +212,7 @@ return [
 
     'callbacks' => [
         'enabled' => env('POLYGLOT_CALLBACKS_ENABLED', false),
-        'prefix' => env('POLYGLOT_CALLBACK_PREFIX', 'api/python'),
+        'prefix' => env('POLYGLOT_CALLBACK_PREFIX', 'api/polyglot'),
         'middleware' => ['api'],
         'rate_limit' => '60,1',
         'secrets' => array_values(array_filter([env('POLYGLOT_CALLBACK_SECRET')])),

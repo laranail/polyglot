@@ -30,7 +30,7 @@ final readonly class CallbackController
 
     public function __invoke(Request $request): JsonResponse
     {
-        $envelope = $request->attributes->get('python_callback');
+        $envelope = $request->attributes->get('polyglot_callback');
 
         if (! $envelope instanceof CallbackEnvelope) {
             // Unreachable through the registered route; a 401 rather than a 500

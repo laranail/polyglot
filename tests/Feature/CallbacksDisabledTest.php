@@ -25,6 +25,6 @@ final class CallbacksDisabledTest extends TestCase
 
     public function test_posting_to_the_callback_path_is_a_404(): void
     {
-        $this->postJson('api/python/callbacks', ['task_id' => 't1'])->assertNotFound();
+        $this->postJson('api/polyglot/callbacks', ['task_id' => 't1'])->assertNotFound();
     }
 }

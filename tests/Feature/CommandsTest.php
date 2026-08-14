@@ -67,7 +67,7 @@ final class CommandsTest extends TestCase
 
     public function test_make_service_scaffolds_three_files(): void
     {
-        $target = base_path('python/services/inference');
+        $target = base_path('polyglot/services/inference');
         File::deleteDirectory($target);
 
         $this->artisan('laranail::polyglot.make-service', ['name' => 'inference'])->assertExitCode(0);
@@ -87,7 +87,7 @@ final class CommandsTest extends TestCase
 
     public function test_make_service_refuses_to_overwrite_without_force(): void
     {
-        $target = base_path('python/services/dup');
+        $target = base_path('polyglot/services/dup');
         File::ensureDirectoryExists($target);
 
         $this->artisan('laranail::polyglot.make-service', ['name' => 'dup'])->assertExitCode(1);

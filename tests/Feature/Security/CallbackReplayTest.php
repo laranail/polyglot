@@ -57,7 +57,7 @@ final class CallbackReplayTest extends TestCase
             ...$overrides,
         ];
 
-        return $this->call('POST', 'api/python/callbacks', [], [], [], $this->serverHeaders($headers), $body);
+        return $this->call('POST', 'api/polyglot/callbacks', [], [], [], $this->serverHeaders($headers), $body);
     }
 
     /**
@@ -133,7 +133,7 @@ final class CallbackReplayTest extends TestCase
         $raw = '{"a": 1, "b": 2}';
         $reencoded = json_encode(json_decode($raw, true), JSON_THROW_ON_ERROR);
 
-        $response = $this->call('POST', 'api/python/callbacks', [], [], [], $this->serverHeaders([
+        $response = $this->call('POST', 'api/polyglot/callbacks', [], [], [], $this->serverHeaders([
             'X-Laranail-Timestamp' => (string) $timestamp,
             'X-Laranail-Signature' => 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $reencoded, self::SECRET),
             'X-Laranail-Id' => 'reordered',

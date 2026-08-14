@@ -1,11 +1,19 @@
 # Changelog
 
-All notable changes to `laranail/python` are documented in this file.
+All notable changes to `laranail/polyglot` are documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.0] - 2026-08-14
+
+The first release under this name. `laranail/polyglot` supersedes
+`laranail/python`, and this tag contains everything below — the rename, the
+fixes that followed it, and what had shipped as `laranail/python 0.1.0`. It is
+one section because it is one tag; splitting it would imply releases that do
+not exist.
+
+See [UPGRADING.md](UPGRADING.md) for the migration.
 
 ### Changed — renamed from `laranail/python`
 
@@ -30,14 +38,25 @@ allow-list, the HMAC callbacks or the replay guard was Python-specific. The name
   named a language, which made a package that talks to any runtime look like one that talks to
   Python and tolerates the rest. `service('fastapi')` says the same thing.
 
+- **The short command aliases are gone**, with no replacement. `python:doctor`,
+  `python:run`, `python:health`, `python:install` and `python:make-service` were
+  the old name *and* a generic slug: a bare `polyglot:doctor` would claim a name
+  any package or application could also want, and Artisan's registry is a flat
+  map where the loser is replaced without a word. Use `laranail::polyglot.<command>`.
+
+- **Two registry names that survived the first pass.** The callback route prefix
+  still defaulted to `api/python`, and cache keys were still written under
+  `laranail:python:`. Both are user-visible — the first is the URL an external
+  caller posts to, the second strands in-flight task handles and replay claims.
+  See [UPGRADING.md](UPGRADING.md); the replay-claim case reopens a
+  one-deployment window in which a used delivery id becomes usable again.
+
 - **`doctor`'s version probe is configurable and reads both streams.** `--version` is not universal:
   `go --version` is an error (the subcommand is `go version`) and `java -version` takes one dash and
   writes to **stderr**. A probe that only read stdout reported Java as "unknown" on a working
   installation.
 
-## [Unreleased]
-
-### Fixed
+### Fixed after the rename
 
 - **A process timeout escaped as a vendor exception instead of arriving as a
   `CallResult`.** A hung script is the reason the clamp exists, so a timeout
@@ -64,7 +83,7 @@ allow-list, the HMAC callbacks or the replay guard was Python-specific. The name
   502s often enough to matter; `--ignore-unreachable` keeps a fetch failure from
   being reported as a vulnerability while a real advisory still fails the job.
 
-### Added
+### Added after the rename
 
 - **`Tests\Feature\Process\RealInterpreterTest`** — the process transport
   against a real Python interpreter, in the `python` group. Asserts the payload
@@ -77,16 +96,16 @@ allow-list, the HMAC callbacks or the replay guard was Python-specific. The name
   substitutes for the other, and the timeout bug above is what the gap was
   hiding.
 
-## [0.1.0] - 2026-08-13
+### What `laranail/python 0.1.0` had already shipped
 
-Initial release. A bidirectional bridge between Laravel and Python.
+A bidirectional bridge between Laravel and a subprocess or HTTP service.
 
 The HTTP half is extracted from `laranail/toolkit`, where it lived as
 `Toolkit\Services\PythonApiService`. See [UPGRADING.md](UPGRADING.md) for the
 config-key move; env var names are unchanged, so an existing `.env` keeps
 working.
 
-### Added
+#### Added
 
 - **HTTP transport.** Named services resolved from config — base URL, timeout,
   retry, TLS, health contract. Adding a service is a config entry, not code.
@@ -111,7 +130,7 @@ working.
 - **A FastAPI scaffold**, capped at three files, whose signing is asserted
   against the verifier in the test suite.
 
-### Fixed on the way over
+#### Fixed on the way over
 
 - **A client error is no longer retried.** Laravel's `retry()` throws on every
   non-2xx once `tries > 1`, so the `retry(3, 100)` inherited from the seed hit a

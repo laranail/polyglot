@@ -12,12 +12,12 @@ it on — see [architecture](../architecture.md) for why absent beats guarded.
 // config/laranail/python.php
 'callbacks' => [
     'enabled' => true,
-    'prefix'  => 'api/python',
+    'prefix'  => 'api/polyglot',
     'secrets' => [env('POLYGLOT_CALLBACK_SECRET')],
 ],
 ```
 
-That registers `POST /api/python/callbacks`, behind the `api` middleware group,
+That registers `POST /api/polyglot/callbacks`, behind the `api` middleware group,
 a throttle, and signature verification.
 
 ## What a caller must send

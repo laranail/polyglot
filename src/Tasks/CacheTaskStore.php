@@ -83,11 +83,11 @@ final readonly class CacheTaskStore implements TaskStore
 
     private function key(string $id): string
     {
-        return 'laranail:python:task:' . $id;
+        return 'laranail:polyglot:task:' . $id;
     }
 
     private function resultKey(string $id): string
     {
-        return 'laranail:python:task:' . $id . ':result';
+        return 'laranail:polyglot:task:' . $id . ':result';
     }
 }

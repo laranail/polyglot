@@ -1,5 +1,53 @@
 # Upgrade guide
 
+## Coming from `laranail/python`
+
+Same package, renamed. Nothing in the transport, the allow-list, the HMAC
+callbacks or the replay guard was ever Python-specific — the name was.
+
+```diff
+-   composer require laranail/python
++   composer require laranail/polyglot
+```
+
+### What you have to change
+
+| Was | Is |
+|---|---|
+| `Simtabi\Laranail\Python\…` | `Simtabi\Laranail\Polyglot\…` |
+| `Python` facade | `Polyglot` facade |
+| `config('laranail.python.*')` | `config('laranail.polyglot.*')` |
+| `PYTHON_*` env vars | `POLYGLOT_*` |
+| `process.interpreters` | `process.runtimes` |
+| a script's `interpreter` key | `runtime` |
+| `$client->fastapi()` / `->flask()` | `Polyglot::service('fastapi')` |
+
+### Three that will not error, and will change behaviour
+
+These fail quietly rather than loudly, so check each one:
+
+- **The callback route prefix default moved from `api/python` to
+  `api/polyglot`.** If you never set `POLYGLOT_CALLBACK_PREFIX`, the endpoint
+  your external caller posts to has changed and it will start getting 404s. Set
+  the env var to `api/python` to keep the old path.
+
+- **The cache key namespace moved from `laranail:python:` to
+  `laranail:polyglot:`.** In-flight async task handles and unspent replay-guard
+  claims are stranded under the old keys — so a delivery id already used
+  becomes usable again. Drain the queue before deploying, or accept a
+  one-deployment replay window.
+
+- **The short command aliases are gone.** `python:doctor`, `python:run`,
+  `python:health`, `python:install` and `python:make-service` are removed and
+  have **no** `polyglot:` replacement. Use the full names —
+  `laranail::polyglot.doctor` and so on. A bare `polyglot:doctor` would claim a
+  name any package or application could also want, and Artisan's registry is a
+  flat map where the loser is replaced without a word. Update any deploy script
+  or cron entry that used the short form.
+
+Scaffolds also move from `python/services/` to `polyglot/services/`, which
+affects new services only.
+
 ## Coming from `laranail/toolkit`
 
 The HTTP half of this package lived in toolkit as
@@ -8,7 +56,7 @@ a microservice client that also needs authentication, a health surface, a
 process transport and a callback endpoint is its own concern.
 
 ```diff
-+   composer require laranail/python
++   composer require laranail/polyglot
 ```
 
 ### Config keys

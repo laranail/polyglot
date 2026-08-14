@@ -22,9 +22,6 @@ final class RunCommand extends Command
 
     protected $name = 'laranail::polyglot.run';
 
-    /** @var list<string> */
-    protected array $commandAliases = ['python:run'];
-
     protected $description = 'Run a registered target with a JSON payload.';
 
     protected $signature = 'laranail::polyglot.run

@@ -89,7 +89,7 @@ wrong.
 | Key | Default | Notes |
 |---|---|---|
 | `callbacks.enabled` | `false` | |
-| `callbacks.prefix` | `api/python` | |
+| `callbacks.prefix` | `api/polyglot` | |
 | `callbacks.middleware` | `['api']` | |
 | `callbacks.rate_limit` | `'60,1'` | |
 | `callbacks.secrets` | `[]` | A **list**. Verified against all, signed with the first, so a rotation does not need an outage. |

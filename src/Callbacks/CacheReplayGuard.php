@@ -32,6 +32,6 @@ final readonly class CacheReplayGuard implements ReplayGuard
 
     private function key(string $id): string
     {
-        return 'laranail:python:callback:' . hash('sha256', $id);
+        return 'laranail:polyglot:callback:' . hash('sha256', $id);
     }
 }
