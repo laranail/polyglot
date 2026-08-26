@@ -196,7 +196,7 @@ final class PolyglotServiceProvider extends PackageServiceProvider
             'prefix' => $config->string('callbacks.prefix', 'api/polyglot'),
             'middleware' => $middleware,
         ], function (): void {
-            $this->loadRoutesFrom(__DIR__ . '/../../routes/callbacks.php');
+            $this->loadRoutesFrom($this->packagePath('routes/callbacks.php'));
         });
     }
 
