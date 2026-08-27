@@ -5,6 +5,19 @@ All notable changes to `laranail/polyglot` are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **The process-transport CI job still found no tests, and the dist check still named the old
+  config path.** Two leftovers from the rename, pulling in opposite directions:
+  `RealInterpreterTest` carried `#[Group('polyglot')]` while `phpunit.xml`, the workflow,
+  `CONTRIBUTING.md` and `docs/release.md` all name the `python` group — so `--group=python`
+  matched nothing (Pest exits 1 on "no tests found") *and* the test leaked into the default
+  suite it is meant to be excluded from. Separately the export-ignore assertion looked for
+  `config/python.php`, which is `config/polyglot.php`. The dedicated job now runs 7 tests and
+  the default suite runs 95 without them.
+
 ## [0.1.0] - 2026-08-14
 
 The first release under this name. `laranail/polyglot` supersedes

@@ -42,7 +42,7 @@ jobs:
           for f in \
             composer.json \
             src/Providers/PolyglotServiceProvider.php \
-            config/python.php \
+            config/polyglot.php \
             routes/callbacks.php \
             stubs/fastapi/main.py.stub \
             stubs/fastapi/requirements.txt.stub \

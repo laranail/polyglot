@@ -28,7 +28,7 @@ use Simtabi\Laranail\Polyglot\ValueObjects\ProcessCall;
  * Excluded from the default suite and run by its own CI job across Python 3.11
  * and 3.13, since it needs an interpreter the developer machine may not have.
  */
-#[Group('polyglot')]
+#[Group('python')]
 final class RealInterpreterTest extends TestCase
 {
     private string $sandbox;
