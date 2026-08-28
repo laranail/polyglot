@@ -57,6 +57,16 @@
         {
             "type": "vcs",
             "url": "https://github.com/laranail/package-tools"
+        },
+        {
+            "type": "composer",
+            "url": "https://repo.packagist.org",
+            "exclude": [
+                "laranail/*"
+            ]
+        },
+        {
+            "packagist.org": false
         }
     ],
     "require-dev": {
@@ -67,7 +77,7 @@
         "orchestra/testbench": "^11.0",
         "pestphp/pest": "^5.1",
         "phpstan/phpstan": "^2.0",
-        "rector/rector": "^2.0",
+        "rector/rector": "^2.5.8",
         "roave/security-advisories": "dev-latest"
     },
     "suggest": {
