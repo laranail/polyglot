@@ -5,7 +5,7 @@ on:
     branches: [main]
   schedule:
     # Weekly, so an advisory published after the last commit is still found.
-    - cron: '0 6 * * 1'
+    - cron: '29 6 * * 1'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
