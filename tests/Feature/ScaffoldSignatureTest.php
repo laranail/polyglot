@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Tests\Feature;
 
-use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
 use Simtabi\Laranail\Polyglot\Tests\TestCase;
+use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
 
 /**
  * The scaffold's signing must agree with the verifier, or the scaffold is a lie
@@ -19,11 +19,6 @@ use Simtabi\Laranail\Polyglot\Tests\TestCase;
 final class ScaffoldSignatureTest extends TestCase
 {
     private const string SECRET = 'scaffold-secret-value-x';
-
-    protected function defineEnvironment($app): void
-    {
-        $app['config']->set('laranail.polyglot.callbacks.secrets', [self::SECRET]);
-    }
 
     public function test_the_stub_signs_the_string_the_verifier_expects(): void
     {
@@ -59,5 +54,10 @@ final class ScaffoldSignatureTest extends TestCase
         self::assertStringContainsString('{"status": "healthy"}', $stub);
         self::assertSame('status', config('laranail.polyglot.services.fastapi.health_key'));
         self::assertSame('healthy', config('laranail.polyglot.services.fastapi.healthy_value'));
+    }
+
+    protected function defineEnvironment($app): void
+    {
+        $app['config']->set('laranail.polyglot.callbacks.secrets', [self::SECRET]);
     }
 }

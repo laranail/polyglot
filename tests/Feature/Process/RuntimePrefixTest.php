@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Polyglot\Tests\Feature\Process;
 
 use PHPUnit\Framework\Attributes\Test;
-use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
-use Simtabi\Laranail\Polyglot\Exceptions\RuntimeNotFoundException;
 use Simtabi\Laranail\Polyglot\Tests\TestCase;
+use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
 use Simtabi\Laranail\Polyglot\ValueObjects\ResolvedCommand;
+use Simtabi\Laranail\Polyglot\Exceptions\RuntimeNotFoundException;
 
 /**
  * The structural change that made this package polyglot rather than Python's.
@@ -21,11 +21,6 @@ use Simtabi\Laranail\Polyglot\ValueObjects\ResolvedCommand;
  */
 final class RuntimePrefixTest extends TestCase
 {
-    private function resolver(): RuntimeResolver
-    {
-        return $this->app->make(RuntimeResolver::class);
-    }
-
     // -----------------------------------------------------------------
     // The three shapes
     // -----------------------------------------------------------------
@@ -164,5 +159,10 @@ final class RuntimePrefixTest extends TestCase
 
         self::assertCount(3, $argv);
         self::assertSame('; rm -rf /', $argv[2]);
+    }
+
+    private function resolver(): RuntimeResolver
+    {
+        return $this->app->make(RuntimeResolver::class);
     }
 }

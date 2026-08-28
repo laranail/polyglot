@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\ValueObjects;
 
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
+use Illuminate\Contracts\Support\Arrayable;
 use Simtabi\Laranail\Polyglot\Enums\ErrorCode;
 use Simtabi\Laranail\Polyglot\Enums\Transport;
 use Simtabi\Laranail\Polyglot\Exceptions\PolyglotException;
@@ -89,35 +89,48 @@ final readonly class CallResult implements Arrayable
         );
     }
 
-    /**
-     * A human label for the failure, for when no message was supplied.
-     */
-    private function describeError(): string
-    {
-        return $this->error instanceof ErrorCode ? $this->error->value : 'unknown';
-    }
-
     public function withDuration(float $ms): self
     {
         return new self(
-            $this->ok, $this->data, $this->error, $this->message,
-            $this->status, $this->exitCode, round($ms, 2), $this->correlationId, $this->via,
+            $this->ok,
+            $this->data,
+            $this->error,
+            $this->message,
+            $this->status,
+            $this->exitCode,
+            round($ms, 2),
+            $this->correlationId,
+            $this->via,
         );
     }
 
     public function withCorrelationId(?string $id): self
     {
         return new self(
-            $this->ok, $this->data, $this->error, $this->message,
-            $this->status, $this->exitCode, $this->durationMs, $id, $this->via,
+            $this->ok,
+            $this->data,
+            $this->error,
+            $this->message,
+            $this->status,
+            $this->exitCode,
+            $this->durationMs,
+            $id,
+            $this->via,
         );
     }
 
     public function withTransport(Transport $via): self
     {
         return new self(
-            $this->ok, $this->data, $this->error, $this->message,
-            $this->status, $this->exitCode, $this->durationMs, $this->correlationId, $via,
+            $this->ok,
+            $this->data,
+            $this->error,
+            $this->message,
+            $this->status,
+            $this->exitCode,
+            $this->durationMs,
+            $this->correlationId,
+            $via,
         );
     }
 
@@ -127,15 +140,23 @@ final readonly class CallResult implements Arrayable
     public function toArray(): array
     {
         return [
-            'ok' => $this->ok,
-            'data' => $this->data,
-            'error' => $this->error?->value,
-            'message' => $this->message,
-            'status' => $this->status,
-            'exit_code' => $this->exitCode,
-            'duration_ms' => $this->durationMs,
+            'ok'             => $this->ok,
+            'data'           => $this->data,
+            'error'          => $this->error?->value,
+            'message'        => $this->message,
+            'status'         => $this->status,
+            'exit_code'      => $this->exitCode,
+            'duration_ms'    => $this->durationMs,
             'correlation_id' => $this->correlationId,
-            'via' => $this->via->value,
+            'via'            => $this->via->value,
         ];
+    }
+
+    /**
+     * A human label for the failure, for when no message was supplied.
+     */
+    private function describeError(): string
+    {
+        return $this->error instanceof ErrorCode ? $this->error->value : 'unknown';
     }
 }

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Tests\Feature\Security;
 
+use Simtabi\Laranail\Polyglot\Tests\TestCase;
 use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
 use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
+use Simtabi\Laranail\Polyglot\ValueObjects\ProcessCall;
 use Simtabi\Laranail\Polyglot\Exceptions\ProcessDisabledException;
 use Simtabi\Laranail\Polyglot\Exceptions\RuntimeNotFoundException;
 use Simtabi\Laranail\Polyglot\Exceptions\ScriptNotAllowedException;
-use Simtabi\Laranail\Polyglot\Tests\TestCase;
-use Simtabi\Laranail\Polyglot\ValueObjects\ProcessCall;
 
 /**
  * The process transport is arbitrary code execution reachable from config.
@@ -48,9 +48,9 @@ final class ProcessInjectionTest extends TestCase
         config()->set('laranail.polyglot.process.root', $this->root);
         config()->set('laranail.polyglot.process.runtimes', ['default' => PHP_BINARY]);
         config()->set('laranail.polyglot.process.scripts', [
-            'echo' => 'scripts/echo.php',
+            'echo'     => 'scripts/echo.php',
             'escaping' => '../outside/secret.php',
-            'missing' => 'scripts/nope.php',
+            'missing'  => 'scripts/nope.php',
         ]);
     }
 
@@ -59,13 +59,6 @@ final class ProcessInjectionTest extends TestCase
         exec('rm -rf ' . escapeshellarg($this->sandbox));
 
         parent::tearDown();
-    }
-
-    private function resolver(): ScriptResolver
-    {
-        $this->app->forgetInstance(ScriptResolver::class);
-
-        return $this->app->make(ScriptResolver::class);
     }
 
     // -----------------------------------------------------------------
@@ -172,7 +165,7 @@ final class ProcessInjectionTest extends TestCase
     public function test_a_script_may_opt_into_flags(): void
     {
         config()->set('laranail.polyglot.process.scripts.echo', [
-            'path' => 'scripts/echo.php',
+            'path'         => 'scripts/echo.php',
             'allows_flags' => true,
         ]);
 
@@ -210,7 +203,7 @@ final class ProcessInjectionTest extends TestCase
     public function test_an_unknown_named_interpreter_is_refused(): void
     {
         config()->set('laranail.polyglot.process.scripts.echo', [
-            'path' => 'scripts/echo.php',
+            'path'    => 'scripts/echo.php',
             'runtime' => 'nonexistent',
         ]);
 
@@ -232,5 +225,12 @@ final class ProcessInjectionTest extends TestCase
 
         $this->app->make(ProcessRunner::class)
             ->run(new ProcessCall('echo'));
+    }
+
+    private function resolver(): ScriptResolver
+    {
+        $this->app->forgetInstance(ScriptResolver::class);
+
+        return $this->app->make(ScriptResolver::class);
     }
 }

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Commands;
 
-use Illuminate\Process\Factory as ProcessFactory;
-use Simtabi\Laranail\Console\Tools\Commands\Command;
-use Simtabi\Laranail\Console\Tools\Commands\Concerns\SupportsNamespacedNames;
-use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
-use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
-use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
-use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
-use Simtabi\Laranail\Polyglot\Exceptions\PolyglotException;
-use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
 use Throwable;
+use Illuminate\Process\Factory as ProcessFactory;
+use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
+use Simtabi\Laranail\Console\Tools\Commands\Command;
+use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
+use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
+use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
+use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
+use Simtabi\Laranail\Polyglot\Exceptions\PolyglotException;
+use Simtabi\Laranail\Console\Tools\Commands\Concerns\SupportsNamespacedNames;
 
 /**
  * Answers the questions you actually have during an incident.
@@ -46,10 +46,10 @@ final class DoctorCommand extends Command
         $problems = [];
 
         $display->keyValue([
-            'Default service' => $config->string('default', 'fastapi'),
-            'Services' => (string) count($http->names()),
+            'Default service'   => $config->string('default', 'fastapi'),
+            'Services'          => (string) count($http->names()),
             'Process transport' => $process->isEnabled() ? 'enabled' : 'disabled',
-            'Callbacks' => $config->bool('callbacks.enabled', false) ? 'enabled' : 'disabled',
+            'Callbacks'         => $config->bool('callbacks.enabled', false) ? 'enabled' : 'disabled',
         ]);
 
         $problems = [...$problems, ...$this->reportServices($http)];
@@ -206,9 +206,9 @@ final class DoctorCommand extends Command
         $secrets = $config->stringList('callbacks.secrets');
 
         $this->services->display()->keyValue([
-            'Callback prefix' => $config->string('callbacks.prefix', 'api/polyglot'),
+            'Callback prefix'  => $config->string('callbacks.prefix', 'api/polyglot'),
             'Callback secrets' => $secrets === [] ? 'none' : count($secrets) . ' configured',
-            'Tolerance' => $config->int('callbacks.tolerance', 300) . 's',
+            'Tolerance'        => $config->int('callbacks.tolerance', 300) . 's',
         ]);
 
         if ($secrets === []) {
@@ -300,8 +300,8 @@ final class DoctorCommand extends Command
         }
 
         return match ($name) {
-            'go' => ['version'],
-            'java' => ['-version'],
+            'go'    => ['version'],
+            'java'  => ['-version'],
             default => ['--version'],
         };
     }

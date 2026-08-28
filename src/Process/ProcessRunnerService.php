@@ -5,22 +5,22 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Polyglot\Process;
 
 use Closure;
-use Illuminate\Contracts\Process\ProcessResult;
-use Illuminate\Process\Exceptions\ProcessTimedOutException as LaravelProcessTimedOut;
-use Illuminate\Process\Factory as ProcessFactory;
 use Psr\Log\LoggerInterface;
-use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
-use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
+use Simtabi\Laranail\Polyglot\Support\Json;
 use Simtabi\Laranail\Polyglot\Enums\ErrorCode;
 use Simtabi\Laranail\Polyglot\Enums\Transport;
-use Simtabi\Laranail\Polyglot\Exceptions\ProcessDisabledException;
-use Simtabi\Laranail\Polyglot\Exceptions\ScriptNotAllowedException;
-use Simtabi\Laranail\Polyglot\Support\Json;
-use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
+use Illuminate\Contracts\Process\ProcessResult;
 use Simtabi\Laranail\Polyglot\Support\Redactor;
+use Illuminate\Process\Factory as ProcessFactory;
+use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
+use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
 use Simtabi\Laranail\Polyglot\ValueObjects\CallResult;
+use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
 use Simtabi\Laranail\Polyglot\ValueObjects\ProcessCall;
 use Simtabi\Laranail\Polyglot\ValueObjects\ResolvedCommand;
+use Simtabi\Laranail\Polyglot\Exceptions\ProcessDisabledException;
+use Simtabi\Laranail\Polyglot\Exceptions\ScriptNotAllowedException;
+use Illuminate\Process\Exceptions\ProcessTimedOutException as LaravelProcessTimedOut;
 use Symfony\Component\Process\Exception\ProcessTimedOutException as SymfonyProcessTimedOut;
 
 /**
@@ -176,6 +176,7 @@ final readonly class ProcessRunnerService implements ProcessRunner
      * flags opts in with `allows_flags`.
      *
      * @param list<string> $args
+     *
      * @return list<string>
      */
     private function guardArguments(array $args, ResolvedCommand $script): array

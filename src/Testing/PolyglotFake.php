@@ -51,6 +51,7 @@ final class PolyglotFake
 
     /**
      * @param list<string> $names
+     *
      * @return array<string, HealthReport>
      */
     public function healthAll(array $names): array

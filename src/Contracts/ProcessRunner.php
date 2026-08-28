@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Contracts;
 
-use Simtabi\Laranail\Polyglot\Exceptions\ProcessDisabledException;
 use Simtabi\Laranail\Polyglot\ValueObjects\CallResult;
 use Simtabi\Laranail\Polyglot\ValueObjects\ProcessCall;
+use Simtabi\Laranail\Polyglot\Exceptions\ProcessDisabledException;
 
 /**
  * The wide process seam: run a registered script and read its JSON back.

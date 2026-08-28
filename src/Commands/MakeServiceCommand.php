@@ -40,7 +40,7 @@ final class MakeServiceCommand extends Command
 
         if ($name === '' || preg_match('/^[a-z][a-z0-9_-]*$/i', $name) !== 1) {
             $this->services->display()->error(
-                'The service name must start with a letter and contain only letters, digits, hyphens or underscores.'
+                'The service name must start with a letter and contain only letters, digits, hyphens or underscores.',
             );
 
             return self::FAILURE;

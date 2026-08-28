@@ -4,32 +4,32 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Bridge;
 
-use Illuminate\Contracts\Events\Dispatcher;
+use Throwable;
 use Illuminate\Http\Client\PendingRequest;
-use Simtabi\Laranail\Polyglot\Bridge\Transports\HttpTransport;
-use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
-use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
-use Simtabi\Laranail\Polyglot\Contracts\TaskStore;
+use Illuminate\Contracts\Events\Dispatcher;
 use Simtabi\Laranail\Polyglot\Enums\ErrorCode;
-use Simtabi\Laranail\Polyglot\Enums\TaskStatus;
 use Simtabi\Laranail\Polyglot\Enums\Transport;
+use Simtabi\Laranail\Polyglot\Enums\TaskStatus;
+use Simtabi\Laranail\Polyglot\Tasks\TaskHandle;
 use Simtabi\Laranail\Polyglot\Events\CallFailed;
+use Simtabi\Laranail\Polyglot\Http\HealthReport;
+use Simtabi\Laranail\Polyglot\ValueObjects\Call;
 use Simtabi\Laranail\Polyglot\Events\CallStarted;
+use Simtabi\Laranail\Polyglot\Contracts\TaskStore;
+use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
 use Simtabi\Laranail\Polyglot\Events\CallSucceeded;
 use Simtabi\Laranail\Polyglot\Events\TaskSubmitted;
-use Simtabi\Laranail\Polyglot\Exceptions\InvalidPayloadException;
-use Simtabi\Laranail\Polyglot\Exceptions\PolyglotException;
-use Simtabi\Laranail\Polyglot\Exceptions\ProcessDisabledException;
-use Simtabi\Laranail\Polyglot\Exceptions\ProcessFailedException;
-use Simtabi\Laranail\Polyglot\Exceptions\UnknownServiceException;
-use Simtabi\Laranail\Polyglot\Http\HealthReport;
-use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
-use Simtabi\Laranail\Polyglot\Tasks\TaskHandle;
 use Simtabi\Laranail\Polyglot\Testing\PolyglotFake;
-use Simtabi\Laranail\Polyglot\ValueObjects\Call;
+use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
+use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
 use Simtabi\Laranail\Polyglot\ValueObjects\CallResult;
 use Simtabi\Laranail\Polyglot\ValueObjects\ProcessCall;
-use Throwable;
+use Simtabi\Laranail\Polyglot\Exceptions\PolyglotException;
+use Simtabi\Laranail\Polyglot\Bridge\Transports\HttpTransport;
+use Simtabi\Laranail\Polyglot\Exceptions\ProcessFailedException;
+use Simtabi\Laranail\Polyglot\Exceptions\InvalidPayloadException;
+use Simtabi\Laranail\Polyglot\Exceptions\UnknownServiceException;
+use Simtabi\Laranail\Polyglot\Exceptions\ProcessDisabledException;
 
 /**
  * The facade target: routes a call to the transport that can serve it, and
@@ -314,11 +314,11 @@ class PolyglotManager
     private function errorFor(PolyglotException $e): ErrorCode
     {
         return match (true) {
-            $e instanceof UnknownServiceException => ErrorCode::UnknownService,
+            $e instanceof UnknownServiceException  => ErrorCode::UnknownService,
             $e instanceof ProcessDisabledException => ErrorCode::Disabled,
-            $e instanceof ProcessFailedException => ErrorCode::ProcessFailed,
-            $e instanceof InvalidPayloadException => ErrorCode::InvalidPayload,
-            default => ErrorCode::Unreachable,
+            $e instanceof ProcessFailedException   => ErrorCode::ProcessFailed,
+            $e instanceof InvalidPayloadException  => ErrorCode::InvalidPayload,
+            default                                => ErrorCode::Unreachable,
         };
     }
 

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Commands;
 
+use Simtabi\Laranail\Polyglot\Support\Json;
 use Simtabi\Laranail\Console\Tools\Commands\Command;
-use Simtabi\Laranail\Console\Tools\Commands\Concerns\SupportsNamespacedNames;
 use Simtabi\Laranail\Polyglot\Bridge\PolyglotManager;
 use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
-use Simtabi\Laranail\Polyglot\Support\Json;
+use Simtabi\Laranail\Console\Tools\Commands\Concerns\SupportsNamespacedNames;
 
 /**
  * Invoke a registered script from the CLI.
@@ -34,7 +34,7 @@ final class RunCommand extends Command
         if (! $process->isEnabled()) {
             $this->services->display()->error(
                 'The process transport is disabled. It is arbitrary code execution reachable from '
-                . 'configuration, so it needs a deliberate laranail.polyglot.process.enabled = true.'
+                . 'configuration, so it needs a deliberate laranail.polyglot.process.enabled = true.',
             );
 
             return self::FAILURE;

@@ -59,6 +59,7 @@ final readonly class PolyglotConfig
 
     /**
      * @param array<array-key, mixed> $default
+     *
      * @return array<array-key, mixed>
      */
     public function array(string $key, array $default = []): array

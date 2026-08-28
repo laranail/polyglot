@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Bridge\Transports;
 
-use Illuminate\Http\Client\ConnectionException;
-use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
-use Simtabi\Laranail\Polyglot\Contracts\TransportContract;
 use Simtabi\Laranail\Polyglot\Enums\ErrorCode;
 use Simtabi\Laranail\Polyglot\Enums\Transport;
-use Simtabi\Laranail\Polyglot\Exceptions\UnknownServiceException;
-use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
+use Illuminate\Http\Client\ConnectionException;
 use Simtabi\Laranail\Polyglot\Support\Redactor;
 use Simtabi\Laranail\Polyglot\ValueObjects\Call;
+use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
+use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
 use Simtabi\Laranail\Polyglot\ValueObjects\CallResult;
+use Simtabi\Laranail\Polyglot\Contracts\TransportContract;
+use Simtabi\Laranail\Polyglot\Exceptions\UnknownServiceException;
 
 /**
  * Serves a call over HTTP, flattening the response into the narrow result.

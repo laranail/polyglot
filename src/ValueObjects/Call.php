@@ -31,16 +31,28 @@ final readonly class Call
     public function withTimeout(int $seconds): self
     {
         return new self(
-            $this->target, $this->payload, max(0, $seconds), $this->method,
-            $this->endpoint, $this->args, $this->correlationId, $this->metadata,
+            $this->target,
+            $this->payload,
+            max(0, $seconds),
+            $this->method,
+            $this->endpoint,
+            $this->args,
+            $this->correlationId,
+            $this->metadata,
         );
     }
 
     public function withCorrelationId(string $id): self
     {
         return new self(
-            $this->target, $this->payload, $this->timeout, $this->method,
-            $this->endpoint, $this->args, $id, $this->metadata,
+            $this->target,
+            $this->payload,
+            $this->timeout,
+            $this->method,
+            $this->endpoint,
+            $this->args,
+            $id,
+            $this->metadata,
         );
     }
 

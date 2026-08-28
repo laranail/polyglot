@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Polyglot\Tests\Feature\Security;
 
 use DateTimeImmutable;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Testing\TestResponse;
 use Psr\Clock\ClockInterface;
-use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
+use Illuminate\Testing\TestResponse;
+use Illuminate\Support\Facades\Event;
+use Simtabi\Laranail\Polyglot\Tests\TestCase;
 use Simtabi\Laranail\Polyglot\Enums\RejectionReason;
 use Simtabi\Laranail\Polyglot\Events\CallbackReceived;
 use Simtabi\Laranail\Polyglot\Events\CallbackRejected;
-use Simtabi\Laranail\Polyglot\Tests\TestCase;
+use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
 
 /**
  * The callback surface is the one unauthenticated entry point this package can
@@ -31,48 +31,6 @@ final class CallbackReplayTest extends TestCase
         $this->clock = new FrozenClock(new DateTimeImmutable('2026-08-13 12:00:00'));
         $this->app->instance(ClockInterface::class, $this->clock);
         $this->app->forgetInstance(CallbackVerifier::class);
-    }
-
-    protected function defineEnvironment($app): void
-    {
-        $app['config']->set('laranail.polyglot.callbacks.enabled', true);
-        $app['config']->set('laranail.polyglot.callbacks.secrets', [self::SECRET]);
-        $app['config']->set('laranail.polyglot.callbacks.tolerance', 300);
-        $app['config']->set('cache.default', 'array');
-    }
-
-    /**
-     * @param array<string, string> $overrides
-     */
-    private function deliver(array $payload, array $overrides = [], ?int $at = null): TestResponse
-    {
-        $body = json_encode($payload, JSON_THROW_ON_ERROR);
-        $timestamp = $at ?? $this->clock->now()->getTimestamp();
-
-        $headers = [
-            'X-Laranail-Timestamp' => (string) $timestamp,
-            'X-Laranail-Signature' => 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $body, self::SECRET),
-            'X-Laranail-Id' => 'delivery-1',
-            'Content-Type' => 'application/json',
-            ...$overrides,
-        ];
-
-        return $this->call('POST', 'api/polyglot/callbacks', [], [], [], $this->serverHeaders($headers), $body);
-    }
-
-    /**
-     * @param array<string, string> $headers
-     * @return array<string, string>
-     */
-    private function serverHeaders(array $headers): array
-    {
-        $server = [];
-
-        foreach ($headers as $key => $value) {
-            $server['HTTP_' . strtoupper(str_replace('-', '_', $key))] = $value;
-        }
-
-        return $server;
     }
 
     // -----------------------------------------------------------------
@@ -136,7 +94,7 @@ final class CallbackReplayTest extends TestCase
         $response = $this->call('POST', 'api/polyglot/callbacks', [], [], [], $this->serverHeaders([
             'X-Laranail-Timestamp' => (string) $timestamp,
             'X-Laranail-Signature' => 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $reencoded, self::SECRET),
-            'X-Laranail-Id' => 'reordered',
+            'X-Laranail-Id'        => 'reordered',
         ]), $raw);
 
         $response->assertUnauthorized();
@@ -194,6 +152,49 @@ final class CallbackReplayTest extends TestCase
 
         // Signed with the OLD secret, which is now second in the list.
         $this->deliver(['task_id' => 'rotating'])->assertOk();
+    }
+
+    protected function defineEnvironment($app): void
+    {
+        $app['config']->set('laranail.polyglot.callbacks.enabled', true);
+        $app['config']->set('laranail.polyglot.callbacks.secrets', [self::SECRET]);
+        $app['config']->set('laranail.polyglot.callbacks.tolerance', 300);
+        $app['config']->set('cache.default', 'array');
+    }
+
+    /**
+     * @param array<string, string> $overrides
+     */
+    private function deliver(array $payload, array $overrides = [], ?int $at = null): TestResponse
+    {
+        $body = json_encode($payload, JSON_THROW_ON_ERROR);
+        $timestamp = $at ?? $this->clock->now()->getTimestamp();
+
+        $headers = [
+            'X-Laranail-Timestamp' => (string) $timestamp,
+            'X-Laranail-Signature' => 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $body, self::SECRET),
+            'X-Laranail-Id'        => 'delivery-1',
+            'Content-Type'         => 'application/json',
+            ...$overrides,
+        ];
+
+        return $this->call('POST', 'api/polyglot/callbacks', [], [], [], $this->serverHeaders($headers), $body);
+    }
+
+    /**
+     * @param array<string, string> $headers
+     *
+     * @return array<string, string>
+     */
+    private function serverHeaders(array $headers): array
+    {
+        $server = [];
+
+        foreach ($headers as $key => $value) {
+            $server['HTTP_' . strtoupper(str_replace('-', '_', $key))] = $value;
+        }
+
+        return $server;
     }
 }
 

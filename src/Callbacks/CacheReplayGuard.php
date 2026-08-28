@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Callbacks;
 
-use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Simtabi\Laranail\Polyglot\Contracts\ReplayGuard;
 use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
+use Illuminate\Contracts\Cache\Factory as CacheFactory;
 
 /**
  * Claims a delivery id in the cache, atomically.

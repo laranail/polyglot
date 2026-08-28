@@ -27,12 +27,12 @@ namespace Simtabi\Laranail\Polyglot\Support;
  */
 final class Redactor
 {
+    public const string MASK = '[redacted]';
+
     /**
      * Below this, masking does more damage to the text than the secret is worth.
      */
     private const int MIN_SECRET_LENGTH = 6;
-
-    public const string MASK = '[redacted]';
 
     /**
      * Key-ish names whose adjacent value gets masked, for secrets the package

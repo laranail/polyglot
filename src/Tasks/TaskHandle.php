@@ -26,6 +26,21 @@ final readonly class TaskHandle implements Arrayable
         public int $submittedAt = 0,
     ) {}
 
+    /**
+     * @param array<array-key, mixed> $data
+     */
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            id: is_scalar($data['id'] ?? null) ? (string) $data['id'] : '',
+            target: is_scalar($data['target'] ?? null) ? (string) $data['target'] : '',
+            status: TaskStatus::tryFrom(is_scalar($data['status'] ?? null) ? (string) $data['status'] : '')
+                ?? TaskStatus::Pending,
+            pollUrl: is_string($data['poll_url'] ?? null) ? $data['poll_url'] : null,
+            submittedAt: is_numeric($data['submitted_at'] ?? null) ? (int) $data['submitted_at'] : 0,
+        );
+    }
+
     public function withStatus(TaskStatus $status): self
     {
         return new self($this->id, $this->target, $status, $this->pollUrl, $this->submittedAt);
@@ -40,26 +55,11 @@ final readonly class TaskHandle implements Arrayable
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'target' => $this->target,
-            'status' => $this->status->value,
-            'poll_url' => $this->pollUrl,
+            'id'           => $this->id,
+            'target'       => $this->target,
+            'status'       => $this->status->value,
+            'poll_url'     => $this->pollUrl,
             'submitted_at' => $this->submittedAt,
         ];
-    }
-
-    /**
-     * @param array<array-key, mixed> $data
-     */
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            id: is_scalar($data['id'] ?? null) ? (string) $data['id'] : '',
-            target: is_scalar($data['target'] ?? null) ? (string) $data['target'] : '',
-            status: TaskStatus::tryFrom(is_scalar($data['status'] ?? null) ? (string) $data['status'] : '')
-                ?? TaskStatus::Pending,
-            pollUrl: is_string($data['poll_url'] ?? null) ? $data['poll_url'] : null,
-            submittedAt: is_numeric($data['submitted_at'] ?? null) ? (int) $data['submitted_at'] : 0,
-        );
     }
 }

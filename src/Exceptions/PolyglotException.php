@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Exceptions;
 
+use Throwable;
 use RuntimeException;
 use Simtabi\Laranail\Polyglot\Support\Redactor;
-use Throwable;
 
 /**
  * Base exception for laranail/python.

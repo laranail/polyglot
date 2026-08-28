@@ -49,6 +49,7 @@ final readonly class ResolvedCommand
      * The full argv, ready for `Process`.
      *
      * @param list<string> $arguments
+     *
      * @return list<string>
      */
     public function toCommand(array $arguments = []): array

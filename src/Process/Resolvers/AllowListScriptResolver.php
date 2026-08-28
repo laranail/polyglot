@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Process\Resolvers;
 
-use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
-use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
-use Simtabi\Laranail\Polyglot\Exceptions\ScriptNotAllowedException;
 use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
+use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
+use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
 use Simtabi\Laranail\Polyglot\ValueObjects\ResolvedCommand;
+use Simtabi\Laranail\Polyglot\Exceptions\ScriptNotAllowedException;
 
 /**
  * Resolves a **logical name** to a script, from a configured allow-list.

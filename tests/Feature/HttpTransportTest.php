@@ -5,20 +5,15 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Polyglot\Tests\Feature;
 
 use Illuminate\Support\Facades\Http;
-use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
+use Simtabi\Laranail\Polyglot\Tests\TestCase;
 use Simtabi\Laranail\Polyglot\Enums\ErrorCode;
+use Simtabi\Laranail\Polyglot\Facades\Polyglot;
+use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
 use Simtabi\Laranail\Polyglot\Exceptions\MissingBaseUrlException;
 use Simtabi\Laranail\Polyglot\Exceptions\UnknownServiceException;
-use Simtabi\Laranail\Polyglot\Facades\Polyglot;
-use Simtabi\Laranail\Polyglot\Tests\TestCase;
 
 final class HttpTransportTest extends TestCase
 {
-    private function client(): HttpClient
-    {
-        return $this->app->make(HttpClient::class);
-    }
-
     public function test_it_lists_configured_services(): void
     {
         self::assertSame(['fastapi', 'flask'], $this->client()->names());
@@ -87,7 +82,7 @@ final class HttpTransportTest extends TestCase
 
         config()->set('laranail.polyglot.services.fastapi.auth', [
             'scheme' => 'bearer',
-            'token' => 'secret-token-value',
+            'token'  => 'secret-token-value',
         ]);
 
         $this->client()->service('fastapi')->get('/anything');
@@ -101,7 +96,7 @@ final class HttpTransportTest extends TestCase
 
         config()->set('laranail.polyglot.services.fastapi.auth', [
             'scheme' => 'api_key',
-            'token' => 'key-value-here',
+            'token'  => 'key-value-here',
             'header' => 'X-Custom-Key',
         ]);
 
@@ -201,5 +196,10 @@ final class HttpTransportTest extends TestCase
             'http or https',
             (string) $this->client()->definition('fastapi')->baseUrlProblem(),
         );
+    }
+
+    private function client(): HttpClient
+    {
+        return $this->app->make(HttpClient::class);
     }
 }

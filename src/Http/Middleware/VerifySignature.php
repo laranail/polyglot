@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Polyglot\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
-use Simtabi\Laranail\Polyglot\Events\CallbackRejected;
-use Simtabi\Laranail\Polyglot\Exceptions\CallbackVerificationException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\Events\Dispatcher;
 use Symfony\Component\HttpFoundation\Response;
+use Simtabi\Laranail\Polyglot\Events\CallbackRejected;
+use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
+use Simtabi\Laranail\Polyglot\Exceptions\CallbackVerificationException;
 
 /**
  * Refuses any inbound callback that does not verify.
