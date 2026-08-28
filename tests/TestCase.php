@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Tests;
 
-use Orchestra\Testbench\TestCase as Orchestra;
 use Simtabi\Laranail\Polyglot\Facades\Polyglot;
 use Simtabi\Laranail\Polyglot\Providers\PolyglotServiceProvider;
+use Simtabi\Laranail\Package\Tools\Testing\IsolatedTestCase;
 
-abstract class TestCase extends Orchestra
+abstract class TestCase extends IsolatedTestCase
 {
     /**
      * @return array<int, class-string>
