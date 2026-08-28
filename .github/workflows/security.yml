@@ -1,13 +1,15 @@
 name: Security
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
   schedule:
     # Weekly, so an advisory published after the last commit is still found.
     - cron: '0 6 * * 1'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
