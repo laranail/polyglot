@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Tests\Feature\Security;
 
-use Simtabi\Laranail\Polyglot\Tests\TestCase;
 use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
 use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
-use Simtabi\Laranail\Polyglot\ValueObjects\ProcessCall;
 use Simtabi\Laranail\Polyglot\Exceptions\ProcessDisabledException;
 use Simtabi\Laranail\Polyglot\Exceptions\RuntimeNotFoundException;
 use Simtabi\Laranail\Polyglot\Exceptions\ScriptNotAllowedException;
+use Simtabi\Laranail\Polyglot\Tests\TestCase;
+use Simtabi\Laranail\Polyglot\ValueObjects\ProcessCall;
 
 /**
  * The process transport is arbitrary code execution reachable from config.
@@ -30,33 +30,33 @@ final class ProcessInjectionTest extends TestCase
         // root/ and outside/ are SIBLINGS. An "outside" directory nested inside
         // the root would make every containment assertion pass for the wrong
         // reason.
-        $this->sandbox = sys_get_temp_dir() . '/laranail-polyglot-' . bin2hex(random_bytes(6));
-        $this->root = $this->sandbox . '/root';
+        $this->sandbox = sys_get_temp_dir().'/laranail-polyglot-'.bin2hex(random_bytes(6));
+        $this->root = $this->sandbox.'/root';
 
-        mkdir($this->root . '/scripts', 0o755, true);
-        mkdir($this->sandbox . '/outside', 0o755, true);
+        mkdir($this->root.'/scripts', 0o755, true);
+        mkdir($this->sandbox.'/outside', 0o755, true);
 
         // The interpreter under test is PHP_BINARY, so the fixtures are PHP.
         // The transport does not care what language it launches.
         file_put_contents(
-            $this->root . '/scripts/echo.php',
+            $this->root.'/scripts/echo.php',
             '<?php echo json_encode(["got" => json_decode(stream_get_contents(STDIN), true), "argv" => array_slice($argv, 1)]);',
         );
-        file_put_contents($this->sandbox . '/outside/secret.php', '<?php echo "{}";');
+        file_put_contents($this->sandbox.'/outside/secret.php', '<?php echo "{}";');
 
         config()->set('laranail.polyglot.process.enabled', true);
         config()->set('laranail.polyglot.process.root', $this->root);
         config()->set('laranail.polyglot.process.runtimes', ['default' => PHP_BINARY]);
         config()->set('laranail.polyglot.process.scripts', [
-            'echo'     => 'scripts/echo.php',
+            'echo' => 'scripts/echo.php',
             'escaping' => '../outside/secret.php',
-            'missing'  => 'scripts/nope.php',
+            'missing' => 'scripts/nope.php',
         ]);
     }
 
     protected function tearDown(): void
     {
-        exec('rm -rf ' . escapeshellarg($this->sandbox));
+        exec('rm -rf '.escapeshellarg($this->sandbox));
 
         parent::tearDown();
     }
@@ -91,7 +91,7 @@ final class ProcessInjectionTest extends TestCase
     {
         $resolved = $this->resolver()->resolve('echo');
 
-        self::assertSame(realpath($this->root . '/scripts/echo.php'), $resolved->path);
+        self::assertSame(realpath($this->root.'/scripts/echo.php'), $resolved->path);
     }
 
     public function test_a_config_entry_escaping_the_root_is_refused(): void
@@ -129,7 +129,7 @@ final class ProcessInjectionTest extends TestCase
     {
         // realpath() follows the link, which is the whole reason it is used
         // instead of a lexical normalisation.
-        symlink($this->sandbox . '/outside/secret.php', $this->root . '/scripts/linked.php');
+        symlink($this->sandbox.'/outside/secret.php', $this->root.'/scripts/linked.php');
 
         config()->set('laranail.polyglot.process.allow_arbitrary_paths', true);
 
@@ -144,7 +144,7 @@ final class ProcessInjectionTest extends TestCase
         config()->set('laranail.polyglot.process.allow_arbitrary_paths', true);
 
         self::assertSame(
-            realpath($this->root . '/scripts/echo.php'),
+            realpath($this->root.'/scripts/echo.php'),
             $this->resolver()->resolve('scripts/echo.php')->path,
         );
     }
@@ -165,7 +165,7 @@ final class ProcessInjectionTest extends TestCase
     public function test_a_script_may_opt_into_flags(): void
     {
         config()->set('laranail.polyglot.process.scripts.echo', [
-            'path'         => 'scripts/echo.php',
+            'path' => 'scripts/echo.php',
             'allows_flags' => true,
         ]);
 
@@ -192,7 +192,7 @@ final class ProcessInjectionTest extends TestCase
 
     public function test_a_non_executable_interpreter_is_refused(): void
     {
-        config()->set('laranail.polyglot.process.runtimes', ['default' => $this->root . '/scripts/echo.php']);
+        config()->set('laranail.polyglot.process.runtimes', ['default' => $this->root.'/scripts/echo.php']);
 
         $this->expectException(RuntimeNotFoundException::class);
         $this->expectExceptionCode(3203);
@@ -203,7 +203,7 @@ final class ProcessInjectionTest extends TestCase
     public function test_an_unknown_named_interpreter_is_refused(): void
     {
         config()->set('laranail.polyglot.process.scripts.echo', [
-            'path'    => 'scripts/echo.php',
+            'path' => 'scripts/echo.php',
             'runtime' => 'nonexistent',
         ]);
 

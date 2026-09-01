@@ -16,7 +16,7 @@ use Simtabi\Laranail\Polyglot\Enums\TaskStatus;
 final readonly class CallbackEnvelope
 {
     /**
-     * @param array<array-key, mixed> $payload
+     * @param  array<array-key, mixed>  $payload
      */
     public function __construct(
         public string $id,

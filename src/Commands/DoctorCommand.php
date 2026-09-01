@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Commands;
 
-use Throwable;
 use Illuminate\Process\Factory as ProcessFactory;
-use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
 use Simtabi\Laranail\Console\Tools\Commands\Command;
-use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
-use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
-use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
-use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
-use Simtabi\Laranail\Polyglot\Exceptions\PolyglotException;
 use Simtabi\Laranail\Console\Tools\Commands\Concerns\SupportsNamespacedNames;
+use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
+use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
+use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
+use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
+use Simtabi\Laranail\Polyglot\Exceptions\PolyglotException;
+use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
+use Throwable;
 
 /**
  * Answers the questions you actually have during an incident.
@@ -46,10 +46,10 @@ final class DoctorCommand extends Command
         $problems = [];
 
         $display->keyValue([
-            'Default service'   => $config->string('default', 'fastapi'),
-            'Services'          => (string) count($http->names()),
+            'Default service' => $config->string('default', 'fastapi'),
+            'Services' => (string) count($http->names()),
             'Process transport' => $process->isEnabled() ? 'enabled' : 'disabled',
-            'Callbacks'         => $config->bool('callbacks.enabled', false) ? 'enabled' : 'disabled',
+            'Callbacks' => $config->bool('callbacks.enabled', false) ? 'enabled' : 'disabled',
         ]);
 
         $problems = [...$problems, ...$this->reportServices($http)];
@@ -98,12 +98,12 @@ final class DoctorCommand extends Command
 
             if (! $definition->auth->isComplete()) {
                 $problems[] = "Service [{$name}]: auth scheme [{$definition->auth->scheme->value}] "
-                    . 'is configured without its credential, so requests would go out unauthenticated.';
+                    .'is configured without its credential, so requests would go out unauthenticated.';
             }
 
             if (! $definition->verifySsl) {
                 $problems[] = "Service [{$name}]: TLS verification is off. Prefer a ca_cert, "
-                    . 'which keeps verification on and trusts one extra root.';
+                    .'which keeps verification on and trusts one extra root.';
             }
 
             if ($this->isMetadataAddress($definition->baseUrl)) {
@@ -118,7 +118,7 @@ final class DoctorCommand extends Command
                 $definition->auth->scheme->value,
                 $definition->tlsMode(),
                 $report->healthy ? 'healthy' : 'unhealthy',
-                $report->roundTripMs === null ? '—' : $report->roundTripMs . ' ms',
+                $report->roundTripMs === null ? '—' : $report->roundTripMs.' ms',
             ];
 
             if (! $report->healthy) {
@@ -155,12 +155,12 @@ final class DoctorCommand extends Command
 
         if ($config->bool('process.allow_arbitrary_paths', false)) {
             $problems[] = 'process.allow_arbitrary_paths is on: any path inside the root may be run. '
-                . 'The allow-list is the safer default.';
+                .'The allow-list is the safer default.';
         }
 
         if ($config->bool('process.inherit_env', false)) {
             $problems[] = 'process.inherit_env is on: the child receives the full parent environment, '
-                . 'including APP_KEY and database credentials.';
+                .'including APP_KEY and database credentials.';
         }
 
         foreach ($scripts->names() as $name) {
@@ -173,7 +173,7 @@ final class DoctorCommand extends Command
                     $this->runtimeVersion($processes, $resolved->prefix, $config),
                 ];
             } catch (Throwable $e) {
-                $problems[] = "Script [{$name}]: " . $e->getMessage();
+                $problems[] = "Script [{$name}]: ".$e->getMessage();
             }
         }
 
@@ -188,7 +188,7 @@ final class DoctorCommand extends Command
         try {
             $runtimes->resolve();
         } catch (Throwable $e) {
-            $problems[] = 'Default runtime: ' . $e->getMessage();
+            $problems[] = 'Default runtime: '.$e->getMessage();
         }
 
         return $problems;
@@ -206,9 +206,9 @@ final class DoctorCommand extends Command
         $secrets = $config->stringList('callbacks.secrets');
 
         $this->services->display()->keyValue([
-            'Callback prefix'  => $config->string('callbacks.prefix', 'api/polyglot'),
-            'Callback secrets' => $secrets === [] ? 'none' : count($secrets) . ' configured',
-            'Tolerance'        => $config->int('callbacks.tolerance', 300) . 's',
+            'Callback prefix' => $config->string('callbacks.prefix', 'api/polyglot'),
+            'Callback secrets' => $secrets === [] ? 'none' : count($secrets).' configured',
+            'Tolerance' => $config->int('callbacks.tolerance', 300).'s',
         ]);
 
         if ($secrets === []) {
@@ -242,7 +242,7 @@ final class DoctorCommand extends Command
      * here — the package never builds a command string, and an arch test holds
      * that line.
      *
-     * @param list<string> $prefix
+     * @param  list<string>  $prefix
      */
     private function runtimeVersion(ProcessFactory $processes, array $prefix, PolyglotConfig $config): string
     {
@@ -266,7 +266,7 @@ final class DoctorCommand extends Command
             ->run([...$prefix, ...$this->versionArguments($executable, $config)]);
 
         // Both streams: `java -version` writes to stderr on success.
-        $output = trim($result->output() . ' ' . $result->errorOutput());
+        $output = trim($result->output().' '.$result->errorOutput());
 
         if ($output === '') {
             return 'unknown';
@@ -300,8 +300,8 @@ final class DoctorCommand extends Command
         }
 
         return match ($name) {
-            'go'    => ['version'],
-            'java'  => ['-version'],
+            'go' => ['version'],
+            'java' => ['-version'],
             default => ['--version'],
         };
     }

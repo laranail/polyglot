@@ -35,10 +35,10 @@ return [
     */
 
     'defaults' => [
-        'timeout'            => env('POLYGLOT_TIMEOUT', 30),
-        'connect_timeout'    => env('POLYGLOT_CONNECT_TIMEOUT', 5),
+        'timeout' => env('POLYGLOT_TIMEOUT', 30),
+        'connect_timeout' => env('POLYGLOT_CONNECT_TIMEOUT', 5),
         'max_response_bytes' => 8388608,
-        'json_depth'         => 64,
+        'json_depth' => 64,
     ],
 
     /*
@@ -60,20 +60,20 @@ return [
     'services' => [
 
         'fastapi' => [
-            'base_url'        => env('POLYGLOT_FASTAPI_URL', 'http://127.0.0.1:8000'),
-            'timeout'         => env('POLYGLOT_FASTAPI_TIMEOUT'),
+            'base_url' => env('POLYGLOT_FASTAPI_URL', 'http://127.0.0.1:8000'),
+            'timeout' => env('POLYGLOT_FASTAPI_TIMEOUT'),
             'connect_timeout' => env('POLYGLOT_FASTAPI_CONNECT_TIMEOUT'),
-            'verify_ssl'      => env('POLYGLOT_FASTAPI_VERIFY_SSL', true),
-            'ca_cert'         => env('POLYGLOT_FASTAPI_CA_CERT'),
-            'health_path'     => env('POLYGLOT_FASTAPI_HEALTH_PATH', '/health'),
-            'health_key'      => env('POLYGLOT_FASTAPI_HEALTH_KEY', 'status'),
-            'healthy_value'   => env('POLYGLOT_FASTAPI_HEALTHY_VALUE', 'healthy'),
-            'retry_times'     => env('POLYGLOT_FASTAPI_RETRY_TIMES', 3),
-            'retry_sleep_ms'  => env('POLYGLOT_FASTAPI_RETRY_SLEEP_MS', 100),
-            'auth'            => [
-                'scheme'   => env('POLYGLOT_FASTAPI_AUTH', 'none'),
-                'token'    => env('POLYGLOT_FASTAPI_TOKEN'),
-                'header'   => env('POLYGLOT_FASTAPI_AUTH_HEADER', 'X-API-Key'),
+            'verify_ssl' => env('POLYGLOT_FASTAPI_VERIFY_SSL', true),
+            'ca_cert' => env('POLYGLOT_FASTAPI_CA_CERT'),
+            'health_path' => env('POLYGLOT_FASTAPI_HEALTH_PATH', '/health'),
+            'health_key' => env('POLYGLOT_FASTAPI_HEALTH_KEY', 'status'),
+            'healthy_value' => env('POLYGLOT_FASTAPI_HEALTHY_VALUE', 'healthy'),
+            'retry_times' => env('POLYGLOT_FASTAPI_RETRY_TIMES', 3),
+            'retry_sleep_ms' => env('POLYGLOT_FASTAPI_RETRY_SLEEP_MS', 100),
+            'auth' => [
+                'scheme' => env('POLYGLOT_FASTAPI_AUTH', 'none'),
+                'token' => env('POLYGLOT_FASTAPI_TOKEN'),
+                'header' => env('POLYGLOT_FASTAPI_AUTH_HEADER', 'X-API-Key'),
                 'username' => env('POLYGLOT_FASTAPI_USERNAME'),
                 'password' => env('POLYGLOT_FASTAPI_PASSWORD'),
             ],
@@ -81,20 +81,20 @@ return [
         ],
 
         'flask' => [
-            'base_url'        => env('POLYGLOT_FLASK_URL', 'http://127.0.0.1:5000'),
-            'timeout'         => env('POLYGLOT_FLASK_TIMEOUT'),
+            'base_url' => env('POLYGLOT_FLASK_URL', 'http://127.0.0.1:5000'),
+            'timeout' => env('POLYGLOT_FLASK_TIMEOUT'),
             'connect_timeout' => env('POLYGLOT_FLASK_CONNECT_TIMEOUT'),
-            'verify_ssl'      => env('POLYGLOT_FLASK_VERIFY_SSL', true),
-            'ca_cert'         => env('POLYGLOT_FLASK_CA_CERT'),
-            'health_path'     => env('POLYGLOT_FLASK_HEALTH_PATH', '/health'),
-            'health_key'      => env('POLYGLOT_FLASK_HEALTH_KEY', 'status'),
-            'healthy_value'   => env('POLYGLOT_FLASK_HEALTHY_VALUE', 'healthy'),
-            'retry_times'     => env('POLYGLOT_FLASK_RETRY_TIMES', 3),
-            'retry_sleep_ms'  => env('POLYGLOT_FLASK_RETRY_SLEEP_MS', 100),
-            'auth'            => [
-                'scheme'   => env('POLYGLOT_FLASK_AUTH', 'none'),
-                'token'    => env('POLYGLOT_FLASK_TOKEN'),
-                'header'   => env('POLYGLOT_FLASK_AUTH_HEADER', 'X-API-Key'),
+            'verify_ssl' => env('POLYGLOT_FLASK_VERIFY_SSL', true),
+            'ca_cert' => env('POLYGLOT_FLASK_CA_CERT'),
+            'health_path' => env('POLYGLOT_FLASK_HEALTH_PATH', '/health'),
+            'health_key' => env('POLYGLOT_FLASK_HEALTH_KEY', 'status'),
+            'healthy_value' => env('POLYGLOT_FLASK_HEALTHY_VALUE', 'healthy'),
+            'retry_times' => env('POLYGLOT_FLASK_RETRY_TIMES', 3),
+            'retry_sleep_ms' => env('POLYGLOT_FLASK_RETRY_SLEEP_MS', 100),
+            'auth' => [
+                'scheme' => env('POLYGLOT_FLASK_AUTH', 'none'),
+                'token' => env('POLYGLOT_FLASK_TOKEN'),
+                'header' => env('POLYGLOT_FLASK_AUTH_HEADER', 'X-API-Key'),
                 'username' => env('POLYGLOT_FLASK_USERNAME'),
                 'password' => env('POLYGLOT_FLASK_PASSWORD'),
             ],
@@ -131,17 +131,17 @@ return [
     */
 
     'process' => [
-        'enabled'               => env('POLYGLOT_PROCESS_ENABLED', false),
-        'root'                  => env('POLYGLOT_PROCESS_ROOT'),
+        'enabled' => env('POLYGLOT_PROCESS_ENABLED', false),
+        'root' => env('POLYGLOT_PROCESS_ROOT'),
         'allow_arbitrary_paths' => false,
-        'allow_path_lookup'     => false,
-        'timeout'               => env('POLYGLOT_PROCESS_TIMEOUT', 60),
-        'idle_timeout'          => env('POLYGLOT_PROCESS_IDLE_TIMEOUT', 30),
-        'max_output_bytes'      => 8388608,
-        'log_stderr'            => false,
-        'stderr_max_chars'      => 2000,
-        'inherit_env'           => false,
-        'env'                   => [],
+        'allow_path_lookup' => false,
+        'timeout' => env('POLYGLOT_PROCESS_TIMEOUT', 60),
+        'idle_timeout' => env('POLYGLOT_PROCESS_IDLE_TIMEOUT', 30),
+        'max_output_bytes' => 8388608,
+        'log_stderr' => false,
+        'stderr_max_chars' => 2000,
+        'inherit_env' => false,
+        'env' => [],
 
         /*
         | A runtime is the words that go BEFORE the target, and it is not always
@@ -211,18 +211,18 @@ return [
     */
 
     'callbacks' => [
-        'enabled'          => env('POLYGLOT_CALLBACKS_ENABLED', false),
-        'prefix'           => env('POLYGLOT_CALLBACK_PREFIX', 'api/polyglot'),
-        'middleware'       => ['api'],
-        'rate_limit'       => '60,1',
-        'secrets'          => array_values(array_filter([env('POLYGLOT_CALLBACK_SECRET')])),
-        'algo'             => 'sha256',
-        'tolerance'        => 300,
+        'enabled' => env('POLYGLOT_CALLBACKS_ENABLED', false),
+        'prefix' => env('POLYGLOT_CALLBACK_PREFIX', 'api/polyglot'),
+        'middleware' => ['api'],
+        'rate_limit' => '60,1',
+        'secrets' => array_values(array_filter([env('POLYGLOT_CALLBACK_SECRET')])),
+        'algo' => 'sha256',
+        'tolerance' => 300,
         'signature_header' => 'X-Laranail-Signature',
         'timestamp_header' => 'X-Laranail-Timestamp',
-        'id_header'        => 'X-Laranail-Id',
-        'max_body_bytes'   => 1048576,
-        'replay_store'     => null,
+        'id_header' => 'X-Laranail-Id',
+        'max_body_bytes' => 1048576,
+        'replay_store' => null,
     ],
 
     /*
@@ -232,9 +232,9 @@ return [
     */
 
     'tasks' => [
-        'store'      => null,
-        'ttl'        => 86400,
-        'poll_path'  => '/tasks/{id}',
+        'store' => null,
+        'ttl' => 86400,
+        'poll_path' => '/tasks/{id}',
         'status_key' => 'status',
         'result_key' => 'result',
     ],

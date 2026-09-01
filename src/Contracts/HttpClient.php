@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Polyglot\Contracts;
 
 use Illuminate\Http\Client\PendingRequest;
-use Simtabi\Laranail\Polyglot\Http\HealthReport;
-use Simtabi\Laranail\Polyglot\Http\ServiceDefinition;
 use Simtabi\Laranail\Polyglot\Exceptions\MissingBaseUrlException;
 use Simtabi\Laranail\Polyglot\Exceptions\UnknownServiceException;
+use Simtabi\Laranail\Polyglot\Http\HealthReport;
+use Simtabi\Laranail\Polyglot\Http\ServiceDefinition;
 
 /**
  * The wide HTTP seam: a configured `PendingRequest` for a named service.

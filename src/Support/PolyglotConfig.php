@@ -58,8 +58,7 @@ final readonly class PolyglotConfig
     }
 
     /**
-     * @param array<array-key, mixed> $default
-     *
+     * @param  array<array-key, mixed>  $default
      * @return array<array-key, mixed>
      */
     public function array(string $key, array $default = []): array
@@ -89,11 +88,11 @@ final readonly class PolyglotConfig
 
     public function has(string $key): bool
     {
-        return $this->config->has(self::PREFIX . $key);
+        return $this->config->has(self::PREFIX.$key);
     }
 
     private function raw(string $key): mixed
     {
-        return $this->config->get(self::PREFIX . $key);
+        return $this->config->get(self::PREFIX.$key);
     }
 }

@@ -4,43 +4,43 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Providers;
 
-use Override;
-use Psr\Log\LoggerInterface;
-use Psr\Clock\ClockInterface;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Contracts\Cache\Factory as CacheFactory;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Events\Dispatcher;
-use Simtabi\Laranail\Package\Tools\Package;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Process\Factory as ProcessFactory;
 use Illuminate\Http\Client\Factory as HttpFactory;
-use Simtabi\Laranail\Polyglot\Commands\RunCommand;
-use Simtabi\Laranail\Polyglot\Contracts\TaskStore;
-use Simtabi\Laranail\Polyglot\Support\SystemClock;
-use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
-use Simtabi\Laranail\Polyglot\Tasks\CacheTaskStore;
-use Simtabi\Laranail\Polyglot\Contracts\ReplayGuard;
+use Illuminate\Process\Factory as ProcessFactory;
+use Illuminate\Support\Facades\Route;
+use Override;
+use Psr\Clock\ClockInterface;
+use Psr\Log\LoggerInterface;
+use Simtabi\Laranail\Package\Tools\Package;
+use Simtabi\Laranail\Package\Tools\Providers\PackageServiceProvider;
 use Simtabi\Laranail\Polyglot\Bridge\PolyglotManager;
+use Simtabi\Laranail\Polyglot\Bridge\Transports\HttpTransport;
+use Simtabi\Laranail\Polyglot\Callbacks\CacheReplayGuard;
+use Simtabi\Laranail\Polyglot\Callbacks\HmacCallbackVerifier;
 use Simtabi\Laranail\Polyglot\Commands\DoctorCommand;
 use Simtabi\Laranail\Polyglot\Commands\HealthCommand;
-use Simtabi\Laranail\Polyglot\Http\HttpClientService;
-use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
 use Simtabi\Laranail\Polyglot\Commands\InstallCommand;
-use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
-use Illuminate\Contracts\Cache\Factory as CacheFactory;
-use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
-use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
-use Simtabi\Laranail\Polyglot\Callbacks\CacheReplayGuard;
-use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
 use Simtabi\Laranail\Polyglot\Commands\MakeServiceCommand;
-use Simtabi\Laranail\Polyglot\Process\ProcessRunnerService;
-use Simtabi\Laranail\Polyglot\Callbacks\HmacCallbackVerifier;
-use Simtabi\Laranail\Polyglot\Bridge\Transports\HttpTransport;
+use Simtabi\Laranail\Polyglot\Commands\RunCommand;
+use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
+use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
+use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
+use Simtabi\Laranail\Polyglot\Contracts\ReplayGuard;
+use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
+use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
+use Simtabi\Laranail\Polyglot\Contracts\TaskStore;
+use Simtabi\Laranail\Polyglot\Http\HttpClientService;
 use Simtabi\Laranail\Polyglot\Http\Middleware\VerifySignature;
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
-use Simtabi\Laranail\Package\Tools\Providers\PackageServiceProvider;
+use Simtabi\Laranail\Polyglot\Process\ProcessRunnerService;
 use Simtabi\Laranail\Polyglot\Process\Resolvers\AllowListScriptResolver;
-use Simtabi\Laranail\Polyglot\Process\Resolvers\RootClampScriptResolver;
 use Simtabi\Laranail\Polyglot\Process\Resolvers\ConfiguredRuntimeResolver;
+use Simtabi\Laranail\Polyglot\Process\Resolvers\RootClampScriptResolver;
+use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
+use Simtabi\Laranail\Polyglot\Support\SystemClock;
+use Simtabi\Laranail\Polyglot\Tasks\CacheTaskStore;
 
 final class PolyglotServiceProvider extends PackageServiceProvider
 {
@@ -187,13 +187,13 @@ final class PolyglotServiceProvider extends PackageServiceProvider
         $rateLimit = $config->string('callbacks.rate_limit', '60,1');
 
         if ($rateLimit !== '') {
-            $middleware[] = 'throttle:' . $rateLimit;
+            $middleware[] = 'throttle:'.$rateLimit;
         }
 
         $middleware[] = VerifySignature::class;
 
         Route::group([
-            'prefix'     => $config->string('callbacks.prefix', 'api/polyglot'),
+            'prefix' => $config->string('callbacks.prefix', 'api/polyglot'),
             'middleware' => $middleware,
         ], function (): void {
             $this->loadRoutesFrom($this->packagePath('routes/callbacks.php'));

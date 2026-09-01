@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Process\Resolvers;
 
-use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
 use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
 use Simtabi\Laranail\Polyglot\Exceptions\RuntimeNotFoundException;
+use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
 
 /**
  * Resolves a named runtime to the command prefix that runs a target.
@@ -117,6 +117,6 @@ final readonly class ConfiguredRuntimeResolver implements RuntimeResolver
 
     private function conventionalVenv(): string
     {
-        return $this->root . '/.venv/bin/python';
+        return $this->root.'/.venv/bin/python';
     }
 }

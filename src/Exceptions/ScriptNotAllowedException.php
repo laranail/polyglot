@@ -13,17 +13,17 @@ namespace Simtabi\Laranail\Polyglot\Exceptions;
 class ScriptNotAllowedException extends PolyglotException
 {
     /**
-     * @param list<string> $allowed
+     * @param  list<string>  $allowed
      */
     public static function notRegistered(string $name, array $allowed): self
     {
         $suffix = $allowed === []
             ? 'No scripts are registered.'
-            : 'Registered: ' . implode(', ', $allowed) . '.';
+            : 'Registered: '.implode(', ', $allowed).'.';
 
         return new self(
             message: "No target is registered as [{$name}]. {$suffix} "
-                . 'Scripts are named in laranail.polyglot.process.scripts, not passed as paths.',
+                .'Scripts are named in laranail.polyglot.process.scripts, not passed as paths.',
             code: 3101,
             context: ['script' => $name, 'allowed' => $allowed],
         );
@@ -51,8 +51,8 @@ class ScriptNotAllowedException extends PolyglotException
     {
         return new self(
             message: "The argument [{$argument}] looks like a flag. A caller-supplied flag can "
-                . 'redirect a script\'s output or change what it does, so flags are refused '
-                . 'unless the script sets allows_flags.',
+                .'redirect a script\'s output or change what it does, so flags are refused '
+                .'unless the script sets allows_flags.',
             code: 3104,
             context: ['argument' => $argument],
         );

@@ -72,10 +72,10 @@ final class CommandsTest extends TestCase
 
         $this->artisan('laranail::polyglot.make-service', ['name' => 'inference'])->assertExitCode(0);
 
-        self::assertFileExists($target . '/main.py');
-        self::assertFileExists($target . '/requirements.txt');
-        self::assertFileExists($target . '/README.md');
-        self::assertStringContainsString('inference', (string) file_get_contents($target . '/main.py'));
+        self::assertFileExists($target.'/main.py');
+        self::assertFileExists($target.'/requirements.txt');
+        self::assertFileExists($target.'/README.md');
+        self::assertStringContainsString('inference', (string) file_get_contents($target.'/main.py'));
 
         File::deleteDirectory(base_path('polyglot'));
     }

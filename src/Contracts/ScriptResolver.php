@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Contracts;
 
-use Simtabi\Laranail\Polyglot\ValueObjects\ResolvedCommand;
 use Simtabi\Laranail\Polyglot\Exceptions\ScriptNotAllowedException;
+use Simtabi\Laranail\Polyglot\ValueObjects\ResolvedCommand;
 
 /**
  * Turns a caller's script reference into something safe to execute, or refuses.

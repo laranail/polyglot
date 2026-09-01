@@ -6,13 +6,13 @@ namespace Simtabi\Laranail\Polyglot\Callbacks;
 
 use Illuminate\Http\Request;
 use Psr\Clock\ClockInterface;
-use Simtabi\Laranail\Polyglot\Support\Json;
-use Simtabi\Laranail\Polyglot\Enums\TaskStatus;
+use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
 use Simtabi\Laranail\Polyglot\Contracts\ReplayGuard;
 use Simtabi\Laranail\Polyglot\Enums\RejectionReason;
-use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
-use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
+use Simtabi\Laranail\Polyglot\Enums\TaskStatus;
 use Simtabi\Laranail\Polyglot\Exceptions\CallbackVerificationException;
+use Simtabi\Laranail\Polyglot\Support\Json;
+use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
 
 /**
  * HMAC verification for inbound callbacks.
@@ -101,18 +101,18 @@ final readonly class HmacCallbackVerifier implements CallbackVerifier
         $secrets = $this->config->stringList('callbacks.secrets');
         $secret = $secrets[0] ?? '';
 
-        return 'sha256=' . hash_hmac($this->algo(), $timestamp . '.' . $body, $secret);
+        return 'sha256='.hash_hmac($this->algo(), $timestamp.'.'.$body, $secret);
     }
 
     /**
-     * @param list<string> $secrets
+     * @param  list<string>  $secrets
      */
     private function signatureMatches(string $signature, string $body, int $timestamp, array $secrets): bool
     {
-        $signed = $timestamp . '.' . $body;
+        $signed = $timestamp.'.'.$body;
 
         foreach ($secrets as $secret) {
-            $expected = 'sha256=' . hash_hmac($this->algo(), $signed, $secret);
+            $expected = 'sha256='.hash_hmac($this->algo(), $signed, $secret);
 
             // Constant time: a short-circuiting comparison leaks the correct
             // prefix one byte at a time.

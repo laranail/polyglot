@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Polyglot\Tests\Feature\Process;
 
 use PHPUnit\Framework\Attributes\Test;
-use Simtabi\Laranail\Polyglot\Tests\TestCase;
 use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
-use Simtabi\Laranail\Polyglot\ValueObjects\ResolvedCommand;
 use Simtabi\Laranail\Polyglot\Exceptions\RuntimeNotFoundException;
+use Simtabi\Laranail\Polyglot\Tests\TestCase;
+use Simtabi\Laranail\Polyglot\ValueObjects\ResolvedCommand;
 
 /**
  * The structural change that made this package polyglot rather than Python's.

@@ -22,13 +22,13 @@ class CallbackVerificationException extends PolyglotException
     public static function because(RejectionReason $reason): self
     {
         return new self($reason, match ($reason) {
-            RejectionReason::NoSecretConfigured  => 'No callback secret is configured.',
-            RejectionReason::MissingSignature    => 'The request carried no signature header.',
-            RejectionReason::MissingTimestamp    => 'The request carried no timestamp header.',
-            RejectionReason::SignatureMismatch   => 'The signature did not match.',
+            RejectionReason::NoSecretConfigured => 'No callback secret is configured.',
+            RejectionReason::MissingSignature => 'The request carried no signature header.',
+            RejectionReason::MissingTimestamp => 'The request carried no timestamp header.',
+            RejectionReason::SignatureMismatch => 'The signature did not match.',
             RejectionReason::TimestampOutOfRange => 'The timestamp is outside the tolerance window.',
-            RejectionReason::Replayed            => 'This delivery id has already been seen.',
-            RejectionReason::BodyTooLarge        => 'The request body is over the configured limit.',
+            RejectionReason::Replayed => 'This delivery id has already been seen.',
+            RejectionReason::BodyTooLarge => 'The request body is over the configured limit.',
         });
     }
 }
