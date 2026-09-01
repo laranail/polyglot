@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\ValueObjects;
 
-use Illuminate\Support\Arr;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Arr;
 use Simtabi\Laranail\Polyglot\Enums\ErrorCode;
 use Simtabi\Laranail\Polyglot\Enums\Transport;
 use Simtabi\Laranail\Polyglot\Exceptions\PolyglotException;
@@ -24,7 +24,7 @@ use Simtabi\Laranail\Polyglot\Exceptions\PolyglotException;
 final readonly class CallResult implements Arrayable
 {
     /**
-     * @param array<array-key, mixed> $data
+     * @param  array<array-key, mixed>  $data
      */
     public function __construct(
         public bool $ok,
@@ -39,7 +39,7 @@ final readonly class CallResult implements Arrayable
     ) {}
 
     /**
-     * @param array<array-key, mixed> $data
+     * @param  array<array-key, mixed>  $data
      */
     public static function ok(array $data = [], Transport $via = Transport::Http): self
     {
@@ -83,7 +83,7 @@ final readonly class CallResult implements Arrayable
         }
 
         throw new PolyglotException(
-            $this->message ?? 'The Python call failed: ' . $this->describeError(),
+            $this->message ?? 'The Python call failed: '.$this->describeError(),
             code: 3500,
             context: $this->toArray(),
         );
@@ -140,15 +140,15 @@ final readonly class CallResult implements Arrayable
     public function toArray(): array
     {
         return [
-            'ok'             => $this->ok,
-            'data'           => $this->data,
-            'error'          => $this->error?->value,
-            'message'        => $this->message,
-            'status'         => $this->status,
-            'exit_code'      => $this->exitCode,
-            'duration_ms'    => $this->durationMs,
+            'ok' => $this->ok,
+            'data' => $this->data,
+            'error' => $this->error?->value,
+            'message' => $this->message,
+            'status' => $this->status,
+            'exit_code' => $this->exitCode,
+            'duration_ms' => $this->durationMs,
             'correlation_id' => $this->correlationId,
-            'via'            => $this->via->value,
+            'via' => $this->via->value,
         ];
     }
 

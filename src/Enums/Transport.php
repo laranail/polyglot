@@ -20,9 +20,9 @@ enum Transport: string
     public function label(): string
     {
         return match ($this) {
-            self::Http    => 'HTTP service',
+            self::Http => 'HTTP service',
             self::Process => 'local process',
-            self::Fake    => 'faked',
+            self::Fake => 'faked',
         };
     }
 }

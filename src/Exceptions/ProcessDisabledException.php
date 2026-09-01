@@ -10,8 +10,8 @@ class ProcessDisabledException extends PolyglotException
     {
         return new self(
             message: 'Running local processes is disabled. It is arbitrary code execution '
-                . 'reachable from configuration, so it requires a deliberate '
-                . 'laranail.polyglot.process.enabled = true.',
+                .'reachable from configuration, so it requires a deliberate '
+                .'laranail.polyglot.process.enabled = true.',
             code: 3003,
         );
     }

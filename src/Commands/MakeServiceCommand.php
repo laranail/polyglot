@@ -66,10 +66,10 @@ final class MakeServiceCommand extends Command
         ];
 
         foreach (['main.py', 'requirements.txt', 'README.md'] as $file) {
-            $stub = __DIR__ . '/../../stubs/fastapi/' . $file . '.stub';
+            $stub = __DIR__.'/../../stubs/fastapi/'.$file.'.stub';
 
             $files->put(
-                $target . '/' . $file,
+                $target.'/'.$file,
                 strtr($files->get($stub), $replacements),
             );
         }

@@ -47,7 +47,7 @@ it('clamps a long traceback to a tail', function (): void {
 it('redacts before clamping, so a secret near the end cannot slip through', function (): void {
     $r = (new Redactor)->remember('leaked-secret-value');
 
-    expect($r->tail(str_repeat('x', 200) . ' leaked-secret-value', 60))
+    expect($r->tail(str_repeat('x', 200).' leaked-secret-value', 60))
         ->not->toContain('leaked-secret-value');
 });
 

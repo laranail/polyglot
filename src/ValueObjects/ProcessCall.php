@@ -17,9 +17,9 @@ use Closure;
 final readonly class ProcessCall
 {
     /**
-     * @param array<array-key, mixed> $payload JSON, delivered on stdin
-     * @param list<string> $args
-     * @param (Closure(string, string): void)|null $onOutput
+     * @param  array<array-key, mixed>  $payload  JSON, delivered on stdin
+     * @param  list<string>  $args
+     * @param  (Closure(string, string): void)|null  $onOutput
      */
     public function __construct(
         public string $script,

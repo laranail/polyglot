@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Http;
 
-use Simtabi\Laranail\Polyglot\Http\Auth\AuthDefinition;
 use Simtabi\Laranail\Polyglot\Exceptions\MissingBaseUrlException;
+use Simtabi\Laranail\Polyglot\Http\Auth\AuthDefinition;
 
 /**
  * Immutable description of one named service, read from
@@ -36,7 +36,7 @@ final readonly class ServiceDefinition
     ) {}
 
     /**
-     * @param array<array-key, mixed> $config
+     * @param  array<array-key, mixed>  $config
      */
     public static function fromArray(string $name, array $config, int $defaultTimeout, int $defaultConnectTimeout): self
     {
@@ -89,7 +89,7 @@ final readonly class ServiceDefinition
         }
 
         return is_file($this->caCert)
-            ? 'verify (custom CA: ' . $this->caCert . ')'
+            ? 'verify (custom CA: '.$this->caCert.')'
             : 'verify (system CA bundle — configured CA is missing)';
     }
 

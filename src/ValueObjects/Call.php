@@ -13,9 +13,9 @@ namespace Simtabi\Laranail\Polyglot\ValueObjects;
 final readonly class Call
 {
     /**
-     * @param array<array-key, mixed> $payload
-     * @param list<string> $args
-     * @param array<string, mixed> $metadata
+     * @param  array<array-key, mixed>  $payload
+     * @param  list<string>  $args
+     * @param  array<string, mixed>  $metadata
      */
     public function __construct(
         public string $target,

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Tests\Feature;
 
-use Simtabi\Laranail\Polyglot\Tests\TestCase;
 use Simtabi\Laranail\Polyglot\Enums\Transport;
-use Simtabi\Laranail\Polyglot\Facades\Polyglot;
-use Simtabi\Laranail\Polyglot\ValueObjects\Call;
-use Simtabi\Laranail\Polyglot\Testing\RecordedCall;
-use Simtabi\Laranail\Polyglot\ValueObjects\CallResult;
 use Simtabi\Laranail\Polyglot\Exceptions\PolyglotException;
+use Simtabi\Laranail\Polyglot\Facades\Polyglot;
+use Simtabi\Laranail\Polyglot\Testing\RecordedCall;
+use Simtabi\Laranail\Polyglot\Tests\TestCase;
+use Simtabi\Laranail\Polyglot\ValueObjects\Call;
+use Simtabi\Laranail\Polyglot\ValueObjects\CallResult;
 
 final class TestingHelpersTest extends TestCase
 {

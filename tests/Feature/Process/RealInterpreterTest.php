@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Tests\Feature\Process;
 
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
-use Simtabi\Laranail\Polyglot\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
+use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
 use Simtabi\Laranail\Polyglot\Enums\ErrorCode;
 use Simtabi\Laranail\Polyglot\Enums\Transport;
-use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
+use Simtabi\Laranail\Polyglot\Tests\TestCase;
 use Simtabi\Laranail\Polyglot\ValueObjects\ProcessCall;
 
 /**
@@ -41,8 +41,8 @@ final class RealInterpreterTest extends TestCase
 
         $this->interpreter = $this->locateInterpreter();
 
-        $this->sandbox = sys_get_temp_dir() . '/laranail-polyglot-real-' . bin2hex(random_bytes(6));
-        mkdir($this->sandbox . '/scripts', 0o755, true);
+        $this->sandbox = sys_get_temp_dir().'/laranail-polyglot-real-'.bin2hex(random_bytes(6));
+        mkdir($this->sandbox.'/scripts', 0o755, true);
 
         $this->writeScript('echo.py', <<<'PY'
             import json, sys
@@ -77,24 +77,24 @@ final class RealInterpreterTest extends TestCase
             PY);
 
         config()->set('laranail.polyglot.process', [
-            'enabled'               => true,
-            'root'                  => $this->sandbox,
+            'enabled' => true,
+            'root' => $this->sandbox,
             'allow_arbitrary_paths' => false,
-            'allow_path_lookup'     => false,
-            'timeout'               => 20,
-            'idle_timeout'          => 10,
-            'max_output_bytes'      => 8_388_608,
-            'log_stderr'            => false,
-            'stderr_max_chars'      => 2000,
-            'inherit_env'           => false,
-            'env'                   => ['ALLOWED_VAR' => 'i-am-allowed'],
-            'runtimes'              => ['default' => $this->interpreter],
-            'scripts'               => [
-                'echo'  => $this->sandbox . '/scripts/echo.py',
-                'boom'  => $this->sandbox . '/scripts/boom.py',
-                'env'   => $this->sandbox . '/scripts/env.py',
-                'argv'  => $this->sandbox . '/scripts/argv.py',
-                'sleep' => $this->sandbox . '/scripts/sleep.py',
+            'allow_path_lookup' => false,
+            'timeout' => 20,
+            'idle_timeout' => 10,
+            'max_output_bytes' => 8_388_608,
+            'log_stderr' => false,
+            'stderr_max_chars' => 2000,
+            'inherit_env' => false,
+            'env' => ['ALLOWED_VAR' => 'i-am-allowed'],
+            'runtimes' => ['default' => $this->interpreter],
+            'scripts' => [
+                'echo' => $this->sandbox.'/scripts/echo.py',
+                'boom' => $this->sandbox.'/scripts/boom.py',
+                'env' => $this->sandbox.'/scripts/env.py',
+                'argv' => $this->sandbox.'/scripts/argv.py',
+                'sleep' => $this->sandbox.'/scripts/sleep.py',
             ],
         ]);
     }
@@ -102,7 +102,7 @@ final class RealInterpreterTest extends TestCase
     protected function tearDown(): void
     {
         if (is_dir($this->sandbox)) {
-            exec('rm -rf ' . escapeshellarg($this->sandbox));
+            exec('rm -rf '.escapeshellarg($this->sandbox));
         }
 
         parent::tearDown();
@@ -244,7 +244,7 @@ final class RealInterpreterTest extends TestCase
         // about that, so strip it back out.
         $lines = array_map(ltrim(...), explode("\n", $body));
 
-        file_put_contents($this->sandbox . '/scripts/' . $name, implode("\n", $lines) . "\n");
+        file_put_contents($this->sandbox.'/scripts/'.$name, implode("\n", $lines)."\n");
     }
 
     private function locateInterpreter(): string

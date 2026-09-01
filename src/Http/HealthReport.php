@@ -31,13 +31,13 @@ final readonly class HealthReport implements Arrayable
     public function toArray(): array
     {
         return [
-            'name'          => $this->name,
-            'healthy'       => $this->healthy,
+            'name' => $this->name,
+            'healthy' => $this->healthy,
             'round_trip_ms' => $this->roundTripMs,
-            'base_url'      => $this->baseUrl,
-            'tls'           => $this->tlsMode,
-            'error'         => $this->error,
-            'via'           => $this->via->value,
+            'base_url' => $this->baseUrl,
+            'tls' => $this->tlsMode,
+            'error' => $this->error,
+            'via' => $this->via->value,
         ];
     }
 }

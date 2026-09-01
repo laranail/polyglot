@@ -22,7 +22,7 @@ enum ErrorCode: string
     {
         return match ($this) {
             self::Unreachable, self::Timeout => true,
-            default                          => false,
+            default => false,
         };
     }
 }
