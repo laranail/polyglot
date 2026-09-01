@@ -2,10 +2,15 @@
 
 ## Reporting a vulnerability
 
-Email **opensource@simtabi.com**. Please do not open a public issue.
+Email **security@simtabi.com**. Please do not open a public issue.
 
 Include the version, a description of the impact, and the smallest reproduction
 you can manage. You will get an acknowledgement within three working days.
+
+> **Prefer GitHub private vulnerability reporting** when you can: open it from this
+> repository's Security tab. The report arrives attached to the repo with a draft advisory
+> and a CVE request path already in place. Email is the fallback for anyone who would
+> rather not use GitHub.
 
 ## What this package's threat model covers
 
