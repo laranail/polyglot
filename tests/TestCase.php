@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Tests;
 
-use Simtabi\Laranail\Package\Tools\Testing\IsolatedTestCase;
 use Simtabi\Laranail\Polyglot\Facades\Polyglot;
+use Simtabi\Laranail\Package\Tools\Testing\IsolatedTestCase;
 use Simtabi\Laranail\Polyglot\Providers\PolyglotServiceProvider;
 
 abstract class TestCase extends IsolatedTestCase

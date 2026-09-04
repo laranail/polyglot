@@ -32,9 +32,9 @@ namespace Simtabi\Laranail\Polyglot\ValueObjects;
 final readonly class ResolvedCommand
 {
     /**
-     * @param  list<string>  $prefix  the words before the target — an interpreter,
-     *                                a container invocation, or nothing at all
-     * @param  array<string, string>  $env
+     * @param list<string> $prefix the words before the target — an interpreter,
+     *                             a container invocation, or nothing at all
+     * @param array<string, string> $env
      */
     public function __construct(
         public string $name,
@@ -48,7 +48,8 @@ final readonly class ResolvedCommand
     /**
      * The full argv, ready for `Process`.
      *
-     * @param  list<string>  $arguments
+     * @param list<string> $arguments
+     *
      * @return list<string>
      */
     public function toCommand(array $arguments = []): array

@@ -10,7 +10,7 @@ class MissingBaseUrlException extends PolyglotException
     {
         return new self(
             message: "The [{$name}] service has no base_url. "
-                ."Set laranail.polyglot.services.{$name}.base_url.",
+                . "Set laranail.polyglot.services.{$name}.base_url.",
             code: 3002,
             context: ['service' => $name],
         );

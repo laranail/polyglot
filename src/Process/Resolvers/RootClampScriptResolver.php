@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Process\Resolvers;
 
-use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
-use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
-use Simtabi\Laranail\Polyglot\Exceptions\ScriptNotAllowedException;
 use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
+use Simtabi\Laranail\Polyglot\Contracts\ScriptResolver;
+use Simtabi\Laranail\Polyglot\Contracts\RuntimeResolver;
 use Simtabi\Laranail\Polyglot\ValueObjects\ResolvedCommand;
+use Simtabi\Laranail\Polyglot\Exceptions\ScriptNotAllowedException;
 
 /**
  * Accepts any path, as long as it resolves inside the configured root.
@@ -37,7 +37,7 @@ final readonly class RootClampScriptResolver implements ScriptResolver
             throw ScriptNotAllowedException::unreadable($script);
         }
 
-        $candidate = str_starts_with($script, '/') ? $script : $this->root.'/'.ltrim($script, '/');
+        $candidate = str_starts_with($script, '/') ? $script : $this->root . '/' . ltrim($script, '/');
 
         $real = realpath($candidate);
         $realRoot = realpath($this->root);
@@ -46,7 +46,7 @@ final readonly class RootClampScriptResolver implements ScriptResolver
             throw ScriptNotAllowedException::unreadable($candidate);
         }
 
-        if ($realRoot === false || ! str_starts_with($real, $realRoot.DIRECTORY_SEPARATOR)) {
+        if ($realRoot === false || ! str_starts_with($real, $realRoot . DIRECTORY_SEPARATOR)) {
             throw ScriptNotAllowedException::outsideRoot($real, $this->root);
         }
 
