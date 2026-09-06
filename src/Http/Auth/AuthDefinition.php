@@ -25,7 +25,7 @@ final readonly class AuthDefinition
     ) {}
 
     /**
-     * @param  array<array-key, mixed>  $config
+     * @param array<array-key, mixed> $config
      */
     public static function fromArray(array $config): self
     {
@@ -49,16 +49,16 @@ final readonly class AuthDefinition
     public function isComplete(): bool
     {
         return match ($this->scheme) {
-            AuthScheme::None => true,
+            AuthScheme::None                       => true,
             AuthScheme::Bearer, AuthScheme::ApiKey => $this->token !== null,
-            AuthScheme::Basic => $this->username !== null && $this->password !== null,
+            AuthScheme::Basic                      => $this->username !== null && $this->password !== null,
         };
     }
 
     public function apply(PendingRequest $request): PendingRequest
     {
         return match ($this->scheme) {
-            AuthScheme::None => $request,
+            AuthScheme::None   => $request,
             AuthScheme::Bearer => $this->token === null
                 ? $request
                 : $request->withToken($this->token),

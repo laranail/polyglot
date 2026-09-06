@@ -31,7 +31,7 @@ final class PolyglotFake
     private array $recorded = [];
 
     /**
-     * @param  array<string, mixed>|callable(Call): CallResult  $responses
+     * @param array<string, mixed>|callable(Call): CallResult $responses
      */
     public function __construct(private $responses = []) {}
 
@@ -50,7 +50,8 @@ final class PolyglotFake
     }
 
     /**
-     * @param  list<string>  $names
+     * @param list<string> $names
+     *
      * @return array<string, HealthReport>
      */
     public function healthAll(array $names): array
@@ -118,7 +119,7 @@ final class PolyglotFake
     {
         Assert::assertEmpty(
             $this->recorded,
-            'Expected no polyglot calls, got: '.implode(', ', array_map(
+            'Expected no polyglot calls, got: ' . implode(', ', array_map(
                 static fn (RecordedCall $c): string => $c->call->target,
                 $this->recorded,
             )),

@@ -27,7 +27,7 @@ final readonly class TaskHandle implements Arrayable
     ) {}
 
     /**
-     * @param  array<array-key, mixed>  $data
+     * @param array<array-key, mixed> $data
      */
     public static function fromArray(array $data): self
     {
@@ -55,10 +55,10 @@ final readonly class TaskHandle implements Arrayable
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'target' => $this->target,
-            'status' => $this->status->value,
-            'poll_url' => $this->pollUrl,
+            'id'           => $this->id,
+            'target'       => $this->target,
+            'status'       => $this->status->value,
+            'poll_url'     => $this->pollUrl,
             'submitted_at' => $this->submittedAt,
         ];
     }

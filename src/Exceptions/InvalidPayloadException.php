@@ -26,7 +26,7 @@ class InvalidPayloadException extends PolyglotException
     {
         return new self(
             message: "The response is {$bytes} bytes, over the {$limit}-byte limit. "
-                .'Raise laranail.polyglot.defaults.max_response_bytes if this is expected.',
+                . 'Raise laranail.polyglot.defaults.max_response_bytes if this is expected.',
             code: 3006,
             context: ['bytes' => $bytes, 'limit' => $limit],
         );

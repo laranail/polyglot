@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Http;
 
-use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Http\Client\Factory as HttpFactory;
+use Throwable;
+use Psr\Log\LoggerInterface;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\RequestException;
-use Psr\Log\LoggerInterface;
-use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
 use Simtabi\Laranail\Polyglot\Enums\Transport;
-use Simtabi\Laranail\Polyglot\Exceptions\UnknownServiceException;
-use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
+use Illuminate\Http\Client\ConnectionException;
 use Simtabi\Laranail\Polyglot\Support\Redactor;
-use Throwable;
+use Illuminate\Http\Client\Factory as HttpFactory;
+use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
+use Simtabi\Laranail\Polyglot\Support\PolyglotConfig;
+use Simtabi\Laranail\Polyglot\Exceptions\UnknownServiceException;
 
 /**
  * Config-driven factory of HTTP clients for named services.
@@ -79,7 +79,7 @@ final readonly class HttpClientService implements HttpClient
                 roundTripMs: $elapsed,
                 baseUrl: $definition->baseUrl,
                 tlsMode: $definition->tlsMode(),
-                error: $healthy ? null : 'HTTP '.$response->status().' did not satisfy the health contract',
+                error: $healthy ? null : 'HTTP ' . $response->status() . ' did not satisfy the health contract',
                 via: Transport::Http,
             );
         } catch (Throwable $e) {
@@ -87,7 +87,7 @@ final readonly class HttpClientService implements HttpClient
 
             $this->logger->warning('Service health check failed', [
                 'service' => $name,
-                'error' => $message,
+                'error'   => $message,
             ]);
 
             return new HealthReport(

@@ -26,7 +26,7 @@ final class Json
     public const int MAX_DEPTH = 64;
 
     /**
-     * @param  array<array-key, mixed>  $payload
+     * @param array<array-key, mixed> $payload
      */
     public static function encode(array $payload): string
     {

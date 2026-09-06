@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Tests\Feature;
 
-use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
 use Simtabi\Laranail\Polyglot\Tests\TestCase;
+use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
 
 /**
  * The scaffold's signing must agree with the verifier, or the scaffold is a lie
@@ -22,7 +22,7 @@ final class ScaffoldSignatureTest extends TestCase
 
     public function test_the_stub_signs_the_string_the_verifier_expects(): void
     {
-        $stub = file_get_contents(__DIR__.'/../../stubs/fastapi/main.py.stub');
+        $stub = file_get_contents(__DIR__ . '/../../stubs/fastapi/main.py.stub');
 
         self::assertIsString($stub);
 
@@ -42,14 +42,14 @@ final class ScaffoldSignatureTest extends TestCase
         $body = json_encode(['task_id' => 't1', 'status' => 'succeeded'], JSON_THROW_ON_ERROR);
         $timestamp = time();
 
-        $stubSignature = 'sha256='.hash_hmac('sha256', $timestamp.'.'.$body, self::SECRET);
+        $stubSignature = 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $body, self::SECRET);
 
         self::assertSame($stubSignature, $verifier->sign($body, $timestamp));
     }
 
     public function test_the_stub_declares_the_health_contract_the_config_expects(): void
     {
-        $stub = (string) file_get_contents(__DIR__.'/../../stubs/fastapi/main.py.stub');
+        $stub = (string) file_get_contents(__DIR__ . '/../../stubs/fastapi/main.py.stub');
 
         self::assertStringContainsString('{"status": "healthy"}', $stub);
         self::assertSame('status', config('laranail.polyglot.services.fastapi.health_key'));

@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Simtabi\Laranail\Polyglot\Tests\Feature\Security;
 
 use DateTimeImmutable;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Testing\TestResponse;
 use Psr\Clock\ClockInterface;
-use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
+use Illuminate\Testing\TestResponse;
+use Illuminate\Support\Facades\Event;
+use Simtabi\Laranail\Polyglot\Tests\TestCase;
 use Simtabi\Laranail\Polyglot\Enums\RejectionReason;
 use Simtabi\Laranail\Polyglot\Events\CallbackReceived;
 use Simtabi\Laranail\Polyglot\Events\CallbackRejected;
-use Simtabi\Laranail\Polyglot\Tests\TestCase;
+use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
 
 /**
  * The callback surface is the one unauthenticated entry point this package can
@@ -93,8 +93,8 @@ final class CallbackReplayTest extends TestCase
 
         $response = $this->call('POST', 'api/polyglot/callbacks', [], [], [], $this->serverHeaders([
             'X-Laranail-Timestamp' => (string) $timestamp,
-            'X-Laranail-Signature' => 'sha256='.hash_hmac('sha256', $timestamp.'.'.$reencoded, self::SECRET),
-            'X-Laranail-Id' => 'reordered',
+            'X-Laranail-Signature' => 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $reencoded, self::SECRET),
+            'X-Laranail-Id'        => 'reordered',
         ]), $raw);
 
         $response->assertUnauthorized();
@@ -163,7 +163,7 @@ final class CallbackReplayTest extends TestCase
     }
 
     /**
-     * @param  array<string, string>  $overrides
+     * @param array<string, string> $overrides
      */
     private function deliver(array $payload, array $overrides = [], ?int $at = null): TestResponse
     {
@@ -172,9 +172,9 @@ final class CallbackReplayTest extends TestCase
 
         $headers = [
             'X-Laranail-Timestamp' => (string) $timestamp,
-            'X-Laranail-Signature' => 'sha256='.hash_hmac('sha256', $timestamp.'.'.$body, self::SECRET),
-            'X-Laranail-Id' => 'delivery-1',
-            'Content-Type' => 'application/json',
+            'X-Laranail-Signature' => 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $body, self::SECRET),
+            'X-Laranail-Id'        => 'delivery-1',
+            'Content-Type'         => 'application/json',
             ...$overrides,
         ];
 
@@ -182,7 +182,8 @@ final class CallbackReplayTest extends TestCase
     }
 
     /**
-     * @param  array<string, string>  $headers
+     * @param array<string, string> $headers
+     *
      * @return array<string, string>
      */
     private function serverHeaders(array $headers): array
@@ -190,7 +191,7 @@ final class CallbackReplayTest extends TestCase
         $server = [];
 
         foreach ($headers as $key => $value) {
-            $server['HTTP_'.strtoupper(str_replace('-', '_', $key))] = $value;
+            $server['HTTP_' . strtoupper(str_replace('-', '_', $key))] = $value;
         }
 
         return $server;

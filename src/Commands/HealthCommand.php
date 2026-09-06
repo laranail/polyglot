@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Simtabi\Laranail\Polyglot\Commands;
 
-use Simtabi\Laranail\Console\Tools\Commands\Command;
-use Simtabi\Laranail\Console\Tools\Commands\Concerns\SupportsNamespacedNames;
-use Simtabi\Laranail\Polyglot\Bridge\PolyglotManager;
 use Simtabi\Laranail\Polyglot\Http\HealthReport;
+use Simtabi\Laranail\Console\Tools\Commands\Command;
+use Simtabi\Laranail\Polyglot\Bridge\PolyglotManager;
+use Simtabi\Laranail\Console\Tools\Commands\Concerns\SupportsNamespacedNames;
 
 /**
  * Health only, for a readiness probe or a CI gate.
@@ -58,7 +58,7 @@ final class HealthCommand extends Command
                 array_map(static fn (HealthReport $r): array => [
                     $r->name,
                     $r->healthy ? 'healthy' : 'unhealthy',
-                    $r->roundTripMs === null ? '—' : $r->roundTripMs.' ms',
+                    $r->roundTripMs === null ? '—' : $r->roundTripMs . ' ms',
                     $r->baseUrl,
                 ], array_values($reports)),
             );

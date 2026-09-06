@@ -70,7 +70,7 @@ final class Redactor
     /**
      * Register several secrets at once; non-string values are skipped.
      *
-     * @param  iterable<array-key, mixed>  $secrets
+     * @param iterable<array-key, mixed> $secrets
      */
     public function rememberAll(iterable $secrets): self
     {
@@ -95,7 +95,7 @@ final class Redactor
 
         return (string) preg_replace_callback(
             self::PATTERN,
-            static fn (array $m): string => $m[1].'='.self::MASK,
+            static fn (array $m): string => $m[1] . '=' . self::MASK,
             $text,
         );
     }
@@ -111,7 +111,7 @@ final class Redactor
             return $text;
         }
 
-        return '…'.substr($text, -$maxChars);
+        return '…' . substr($text, -$maxChars);
     }
 
     /** @return list<string> */
