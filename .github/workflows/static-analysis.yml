@@ -41,7 +41,7 @@ jobs:
           php-version: '8.4'
           coverage: none
       - run: composer update --prefer-dist --no-interaction --no-progress
-      - run: vendor/bin/pint --test
+      - run: vendor/bin/laranail-pint --test
 
   rector:
     name: Rector
