@@ -4,7 +4,7 @@
 [![Static analysis](https://github.com/laranail/polyglot/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/laranail/polyglot/actions/workflows/static-analysis.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-`laranail/polyglot` is not published to Packagist, so there is no registry-version badge to show — see [Install](#install).
+`laranail/polyglot` is not published to Packagist, so there is no registry-version badge to show: see [Install](#install).
 
 > A Python bridge for Laravel — call FastAPI/Flask services over HTTP, run scripts in a virtualenv behind a hardened process clamp, and receive HMAC-signed callbacks when long work finishes.
 
