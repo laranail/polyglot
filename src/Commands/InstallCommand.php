@@ -16,14 +16,14 @@ final class InstallCommand extends Command
 
     protected $name = 'laranail::polyglot.install';
 
-    protected $description = 'Publish the laranail/python configuration.';
+    protected $description = 'Publish the laranail/polyglot configuration.';
 
     public function handle(): int
     {
         $this->callSilently('vendor:publish', ['--tag' => 'laranail::polyglot-config']);
 
         $display = $this->services->display();
-        $display->success('Published config/laranail/python.php.');
+        $display->success('Published config/laranail/polyglot.php.');
 
         $display->list([
             'Point laranail.polyglot.services.* at your services, and set an auth scheme if they need one.',

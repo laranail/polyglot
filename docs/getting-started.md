@@ -5,7 +5,7 @@
 Point a service at a URL:
 
 ```php
-// config/laranail/python.php
+// config/laranail/polyglot.php
 'services' => [
     'fastapi' => ['base_url' => env('POLYGLOT_FASTAPI_URL', 'http://127.0.0.1:8000')],
 ],
