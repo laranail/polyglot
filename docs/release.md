@@ -1,6 +1,6 @@
 # Release process
 
-`laranail/python` is released **tag-driven**: pushing a `vX.Y.Z` tag runs the release workflow, which
+`laranail/polyglot` is released **tag-driven**: pushing a `vX.Y.Z` tag runs the release workflow, which
 publishes the GitHub Release with the CHANGELOG section as its body.
 
 `laranail/*` packages resolve through **git VCS repositories rather than Packagist**, so the tag is the
@@ -20,7 +20,7 @@ tag per the laranail convention.
 - `ValueObjects\{Call, CallResult, ProcessCall, ResolvedCommand}` and the shipped enums.
 - The `Exceptions\*` hierarchy and its codes.
 - `Testing\PolyglotFake` and its assertions.
-- `config/python.php` key shapes and the `POLYGLOT_*` env var names.
+- `config/polyglot.php` key shapes and the `POLYGLOT_*` env var names.
 - The `laranail::polyglot.{doctor,health,run,install,make-service}` command signatures.
 - **The callback wire format** — the signed string, the header names, and the HMAC construction. A
   change here breaks every deployed Python service at once, and they do not upgrade in lockstep with

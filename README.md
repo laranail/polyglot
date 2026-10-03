@@ -17,7 +17,20 @@ composer require laranail/polyglot
 php artisan laranail::polyglot.install
 ```
 
-## Quick start
+## Quick start guide and usage
+
+### Getting started
+
+1. `php artisan laranail::polyglot.install` (see Install) publishes the config and prints what is left.
+2. Point a service at its URL in `.env`. The default service is `fastapi`:
+
+   ```dotenv
+   POLYGLOT_FASTAPI_URL=http://127.0.0.1:8000
+   ```
+
+3. Only HTTP services are on by default. Local scripts stay off until `POLYGLOT_PROCESS_ENABLED=true` (it is code execution), and callbacks stay off until `POLYGLOT_CALLBACKS_ENABLED=true` and `POLYGLOT_CALLBACK_SECRET` is set.
+
+### Usage
 
 ```php
 use Simtabi\Laranail\Polyglot\Facades\Polyglot;

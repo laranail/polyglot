@@ -9,7 +9,7 @@ it on — see [architecture](../architecture.md) for why absent beats guarded.
 ## Enabling it
 
 ```php
-// config/laranail/python.php
+// config/laranail/polyglot.php
 'callbacks' => [
     'enabled' => true,
     'prefix'  => 'api/polyglot',
