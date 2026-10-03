@@ -1,7 +1,7 @@
 # Installation
 
 ```bash
-composer require laranail/python
+composer require laranail/polyglot
 ```
 
 The service provider and the `Polyglot` facade are auto-discovered.
@@ -10,7 +10,7 @@ The service provider and the `Polyglot` facade are auto-discovered.
 php artisan laranail::polyglot.install
 ```
 
-That publishes `config/laranail/python.php` and prints what to do next.
+That publishes `config/laranail/polyglot.php` and prints what to do next.
 
 ## Requirements
 
@@ -32,7 +32,7 @@ does not read a dependency's own `repositories`:
 ```json
 {
     "repositories": [
-        { "type": "vcs", "url": "https://github.com/laranail/python" },
+        { "type": "vcs", "url": "https://github.com/laranail/polyglot" },
         { "type": "vcs", "url": "https://github.com/laranail/console" },
         { "type": "vcs", "url": "https://github.com/laranail/package-tools" }
     ]

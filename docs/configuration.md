@@ -1,6 +1,6 @@
 # Configuration
 
-Everything in `config/python.php`, published by `php artisan laranail::polyglot.install`. Keys live under
+Everything in `config/laranail/polyglot.php`, published by `php artisan laranail::polyglot.install`. Keys live under
 `laranail.polyglot.*`.
 
 Three of these blocks are security boundaries rather than preferences — `process`, `callbacks`, and

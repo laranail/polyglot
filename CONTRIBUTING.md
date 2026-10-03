@@ -21,7 +21,7 @@ clean before a PR.
 - **Never build a command string.** Commands are arrays, which bypass the shell.
   An architecture test asserts `shell_exec`, `exec`, `passthru`, `system`,
   `proc_open` and `popen` appear nowhere in the package.
-- **`env()` is called in `config/python.php` and nowhere else.** Anywhere else
+- **`env()` is called in `config/polyglot.php` and nowhere else.** Anywhere else
   it returns null the moment the host runs `config:cache`. Also asserted.
 - **A secret the package injects must be registered with the `Redactor`.** If it
   can reach stderr or an exception message, it will.
