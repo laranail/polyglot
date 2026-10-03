@@ -1,5 +1,7 @@
 # Contributing
 
+Where this file is silent, the [laranail contributing guide](https://github.com/laranail/.github/blob/HEAD/CONTRIBUTING.md) applies.
+
 Thanks for helping. This package runs local processes and can open an
 unauthenticated HTTP endpoint, so a few things are stricter here than usual.
 
