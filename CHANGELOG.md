@@ -151,3 +151,5 @@ working.
   going to become a 200 — and then raised it as an exception instead of
   returning the response. Retries are now limited to connection failures and
   5xx, and a non-2xx comes back as a `CallResult`.
+
+[Unreleased]: https://github.com/laranail/polyglot/compare/v0.1.0...HEAD
