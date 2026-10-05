@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `illuminate/filesystem` is now declared in `require` at `^13.0`. `src/` imports it, and it was only arriving transitively.
 - Requires `laranail/package-tools ^0.1.3` (for the naming assertions).
 - `laranail::polyglot.install` now extends laranail/package-tools' `InstallCommand` and takes
   laranail/console's display API and run lifecycle from its `InteractsWithConsoleServices` and
