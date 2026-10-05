@@ -159,6 +159,13 @@ final class PolyglotServiceProvider extends PackageServiceProvider
             ),
         );
 
+        // Container aliases share one flat, host-owned map, so the package's own name carries the vendor.
+        $this->app->alias(PolyglotManager::class, 'laranail.polyglot');
+
+        // @deprecated The bare `polyglot` alias is removed no earlier than the next minor after 0.1; resolve
+        //             `laranail.polyglot`, PolyglotManager::class or the `Polyglot` facade instead. The
+        //             container offers no hook on alias resolution, so it cannot announce itself; the
+        //             deprecation is documented in docs/architecture.md and UPGRADING.md.
         $this->app->alias(PolyglotManager::class, 'polyglot');
     }
 

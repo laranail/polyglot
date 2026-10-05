@@ -7,13 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- The `laranail.polyglot` container alias for `PolyglotManager`, and a live-registry naming test
+  over the container's aliases built on package-tools' `AssertsRegisteredNames`.
+
 ### Changed
 
+- Requires `laranail/package-tools ^0.1.3` (for the naming assertions).
 - `laranail::polyglot.install` now extends laranail/package-tools' `InstallCommand` and takes
   laranail/console's display API and run lifecycle from its `InteractsWithConsoleServices` and
   `InteractsWithConsoleWriter` traits instead of its `Command` base. Name, description, listing
   visibility, output and exit code are unchanged and pinned by a new contract test. The command is
   bound in the container because the new base takes the `Package` in its constructor.
+
+### Deprecated
+
+- The bare `polyglot` container alias. It still resolves the same `PolyglotManager`; use
+  `laranail.polyglot`. Removed no earlier than the next minor after 0.1.
 
 ### Fixed
 

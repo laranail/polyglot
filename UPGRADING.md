@@ -1,5 +1,12 @@
 # Upgrade guide
 
+## The `polyglot` container alias
+
+`app('polyglot')` still works, and is deprecated: resolve `app('laranail.polyglot')`,
+`PolyglotManager::class` or the `Polyglot` facade instead. The bare alias is removed
+no earlier than the next minor after 0.1. It raises no notice, because the container
+offers no hook on alias resolution.
+
 ## Coming from `laranail/python`
 
 Same package, renamed. Nothing in the transport, the allow-list, the HMAC

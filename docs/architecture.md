@@ -58,6 +58,22 @@ and stderr is exactly where it misses. Every secret this package injects is
 registered by value, so it can be found again wherever it surfaced and whatever
 framing it picked up. See [security.md](security.md).
 
+## Container names
+
+The manager is bound as `PolyglotManager::class` and aliased as `laranail.polyglot`.
+Container aliases share one flat map with every other package and the application,
+so a bare `polyglot` is one sibling package away from being silently replaced.
+
+```php
+app('laranail.polyglot');           // PolyglotManager
+app(PolyglotManager::class);        // the same instance
+Polyglot::service('fastapi');       // the facade, keyed on the class
+```
+
+**The bare `polyglot` alias is deprecated** and removed no earlier than the next
+minor after 0.1. It still resolves the same instance. The container has no hook on
+alias resolution, so it cannot raise a notice; move to `laranail.polyglot`.
+
 ## What is deliberately not here yet
 
 | Deferred | Why |
