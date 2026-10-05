@@ -62,6 +62,10 @@ final class PolyglotServiceProvider extends PackageServiceProvider
     #[Override]
     public function packageRegistered(): void
     {
+        // The install command's base takes the Package in its constructor, which the container
+        // cannot supply on its own.
+        $this->app->bind(InstallCommand::class, fn (): InstallCommand => new InstallCommand($this->package));
+
         $this->app->singleton(
             PolyglotConfig::class,
             static fn (Application $app): PolyglotConfig => new PolyglotConfig($app->make(ConfigRepository::class)),
