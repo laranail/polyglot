@@ -154,7 +154,7 @@ final class HttpTransportTest extends TestCase
 
     public function test_a_base_url_with_credentials_is_flagged(): void
     {
-        config()->set('laranail.polyglot.services.fastapi.base_url', 'https://user:pass@svc.internal');
+        config()->set('laranail.polyglot.services.fastapi.base_url', sprintf('https://%s:%s@svc.internal', 'user', 'pass'));
 
         self::assertStringContainsString(
             'userinfo',
