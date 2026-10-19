@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Test credentials are generated at run time.** Secrets and tokens in the tests come from
+  `TestCredentials` instead of literals, which secret scanning reported as leaks. A guard test
+  fails on any literal left behind. The `laranail/package-tools` floor is now `^0.1.9`, the
+  release that ships these helpers.
 - `illuminate/filesystem` is now declared in `require` at `^13.0`. `src/` imports it, and it was only arriving transitively.
 - Requires `laranail/package-tools ^0.1.3` (for the naming assertions).
 - `laranail::polyglot.install` now extends laranail/package-tools' `InstallCommand` and takes

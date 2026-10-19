@@ -9,6 +9,7 @@ use Simtabi\Laranail\Polyglot\Tests\TestCase;
 use Simtabi\Laranail\Polyglot\Enums\ErrorCode;
 use Simtabi\Laranail\Polyglot\Facades\Polyglot;
 use Simtabi\Laranail\Polyglot\Contracts\HttpClient;
+use Simtabi\Laranail\Package\Tools\Testing\TestCredentials;
 use Simtabi\Laranail\Polyglot\Exceptions\MissingBaseUrlException;
 use Simtabi\Laranail\Polyglot\Exceptions\UnknownServiceException;
 
@@ -82,12 +83,12 @@ final class HttpTransportTest extends TestCase
 
         config()->set('laranail.polyglot.services.fastapi.auth', [
             'scheme' => 'bearer',
-            'token'  => 'secret-token-value',
+            'token'  => TestCredentials::secret('bearer'),
         ]);
 
         $this->client()->service('fastapi')->get('/anything');
 
-        Http::assertSent(fn ($request): bool => $request->hasHeader('Authorization', 'Bearer secret-token-value'));
+        Http::assertSent(fn ($request): bool => $request->hasHeader('Authorization', sprintf('Bearer %s', TestCredentials::secret('bearer'))));
     }
 
     public function test_an_api_key_header_is_sent(): void
@@ -96,13 +97,13 @@ final class HttpTransportTest extends TestCase
 
         config()->set('laranail.polyglot.services.fastapi.auth', [
             'scheme' => 'api_key',
-            'token'  => 'key-value-here',
+            'token'  => TestCredentials::secret('header'),
             'header' => 'X-Custom-Key',
         ]);
 
         $this->client()->service('fastapi')->get('/anything');
 
-        Http::assertSent(fn ($request): bool => $request->hasHeader('X-Custom-Key', 'key-value-here'));
+        Http::assertSent(fn ($request): bool => $request->hasHeader('X-Custom-Key', TestCredentials::secret('header')));
     }
 
     public function test_an_auth_scheme_without_its_credential_is_reported_incomplete(): void
