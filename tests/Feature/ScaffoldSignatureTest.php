@@ -6,6 +6,7 @@ namespace Simtabi\Laranail\Polyglot\Tests\Feature;
 
 use Simtabi\Laranail\Polyglot\Tests\TestCase;
 use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
+use Simtabi\Laranail\Package\Tools\Testing\TestCredentials;
 
 /**
  * The scaffold's signing must agree with the verifier, or the scaffold is a lie
@@ -18,8 +19,6 @@ use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
  */
 final class ScaffoldSignatureTest extends TestCase
 {
-    private const string SECRET = 'scaffold-secret-value-x';
-
     public function test_the_stub_signs_the_string_the_verifier_expects(): void
     {
         $stub = file_get_contents(__DIR__ . '/../../stubs/fastapi/main.py.stub');
@@ -42,7 +41,7 @@ final class ScaffoldSignatureTest extends TestCase
         $body = json_encode(['task_id' => 't1', 'status' => 'succeeded'], JSON_THROW_ON_ERROR);
         $timestamp = time();
 
-        $stubSignature = 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $body, self::SECRET);
+        $stubSignature = 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $body, $this->secret());
 
         self::assertSame($stubSignature, $verifier->sign($body, $timestamp));
     }
@@ -58,6 +57,11 @@ final class ScaffoldSignatureTest extends TestCase
 
     protected function defineEnvironment($app): void
     {
-        $app['config']->set('laranail.polyglot.callbacks.secrets', [self::SECRET]);
+        $app['config']->set('laranail.polyglot.callbacks.secrets', [$this->secret()]);
+    }
+
+    private function secret(): string
+    {
+        return TestCredentials::secret('scaffold');
     }
 }

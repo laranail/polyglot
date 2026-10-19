@@ -11,6 +11,7 @@ use Simtabi\Laranail\Polyglot\Enums\ErrorCode;
 use Simtabi\Laranail\Polyglot\Enums\Transport;
 use Simtabi\Laranail\Polyglot\Contracts\ProcessRunner;
 use Simtabi\Laranail\Polyglot\ValueObjects\ProcessCall;
+use Simtabi\Laranail\Package\Tools\Testing\TestCredentials;
 
 /**
  * The process transport against a real Python interpreter.
@@ -198,7 +199,7 @@ final class RealInterpreterTest extends TestCase
         // readable by every other user on the host for the process's lifetime.
         $result = $this->runner()->run(new ProcessCall(
             script: 'argv',
-            payload: ['api_key' => 'SUPERSECRET'],
+            payload: ['api_key' => TestCredentials::secret('payload')],
             args: ['verbose'],
         ));
 
@@ -208,9 +209,9 @@ final class RealInterpreterTest extends TestCase
 
         self::assertIsArray($argv);
         self::assertSame(['verbose'], $argv, 'Only the explicit args should reach argv.');
-        self::assertNotContains('SUPERSECRET', $argv);
+        self::assertNotContains(TestCredentials::secret('payload'), $argv);
         self::assertStringNotContainsString(
-            'SUPERSECRET',
+            TestCredentials::secret('payload'),
             implode(' ', array_map(strval(...), $argv)),
             'The payload was passed on the command line.',
         );

@@ -13,6 +13,7 @@ use Simtabi\Laranail\Polyglot\Enums\RejectionReason;
 use Simtabi\Laranail\Polyglot\Events\CallbackReceived;
 use Simtabi\Laranail\Polyglot\Events\CallbackRejected;
 use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
+use Simtabi\Laranail\Package\Tools\Testing\TestCredentials;
 
 /**
  * The callback surface is the one unauthenticated entry point this package can
@@ -20,8 +21,6 @@ use Simtabi\Laranail\Polyglot\Contracts\CallbackVerifier;
  */
 final class CallbackReplayTest extends TestCase
 {
-    private const string SECRET = 'callback-secret-value-for-tests';
-
     private FrozenClock $clock;
 
     protected function setUp(): void
@@ -93,7 +92,7 @@ final class CallbackReplayTest extends TestCase
 
         $response = $this->call('POST', 'api/polyglot/callbacks', [], [], [], $this->serverHeaders([
             'X-Laranail-Timestamp' => (string) $timestamp,
-            'X-Laranail-Signature' => 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $reencoded, self::SECRET),
+            'X-Laranail-Signature' => 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $reencoded, $this->secret()),
             'X-Laranail-Id'        => 'reordered',
         ]), $raw);
 
@@ -147,7 +146,8 @@ final class CallbackReplayTest extends TestCase
 
     public function test_a_second_secret_still_verifies_during_rotation(): void
     {
-        config()->set('laranail.polyglot.callbacks.secrets', ['the-new-secret-value', self::SECRET]);
+        self::assertNotSame(TestCredentials::secret('rotated'), $this->secret());
+        config()->set('laranail.polyglot.callbacks.secrets', [TestCredentials::secret('rotated'), $this->secret()]);
         $this->app->forgetInstance(CallbackVerifier::class);
 
         // Signed with the OLD secret, which is now second in the list.
@@ -157,9 +157,14 @@ final class CallbackReplayTest extends TestCase
     protected function defineEnvironment($app): void
     {
         $app['config']->set('laranail.polyglot.callbacks.enabled', true);
-        $app['config']->set('laranail.polyglot.callbacks.secrets', [self::SECRET]);
+        $app['config']->set('laranail.polyglot.callbacks.secrets', [$this->secret()]);
         $app['config']->set('laranail.polyglot.callbacks.tolerance', 300);
         $app['config']->set('cache.default', 'array');
+    }
+
+    private function secret(): string
+    {
+        return TestCredentials::secret('callback');
     }
 
     /**
@@ -172,7 +177,7 @@ final class CallbackReplayTest extends TestCase
 
         $headers = [
             'X-Laranail-Timestamp' => (string) $timestamp,
-            'X-Laranail-Signature' => 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $body, self::SECRET),
+            'X-Laranail-Signature' => 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $body, $this->secret()),
             'X-Laranail-Id'        => 'delivery-1',
             'Content-Type'         => 'application/json',
             ...$overrides,
